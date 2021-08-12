@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "namaz",
+    "slug": "namaz",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "namaz"
+}
