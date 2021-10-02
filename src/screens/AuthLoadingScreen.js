@@ -1,24 +1,25 @@
 import React from "react";
-import Background from "../components/Background";
-import firebase from "firebase/app";
+import firebase from '../../config'
 import { ActivityIndicator } from "react-native";
+import { View } from 'react-native'
 
 export default function AuthLoadingScreen({ navigation }){
 
     firebase.auth().onAuthStateChanged((user) => {
         if(user){
             navigation.reset({
-                routes: [{name: 'Map' }]
+                routes: [{name: 'TabScreen' }]
             })
         } else {
             navigation.reset({
-                routes: [{name: 'StartScreen' }]
+                routes: [{name: 'Login' }]
             })
         }
     })
     return (
-        <Background>
+        <View>
             <ActivityIndicator size="large"/>
-        </Background>
+        </View>
+
     )
 }

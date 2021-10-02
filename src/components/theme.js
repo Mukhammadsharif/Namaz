@@ -11,6 +11,7 @@ export const theme = {
         border: '#C9DDEC',
         error: '#f13a59',
         success: '#008386',
-        google: '#2E7D32'
+        google: '#2E7D32',
+        white: '#FFFFFF'
     },
 }

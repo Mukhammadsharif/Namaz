@@ -1,13 +1,13 @@
 import axios from 'axios'
 import humps from 'humps'
-import env from '../environment'
+import Config from 'react-native-config'
 
-const backendUrl = env.BASE_URL
+const backendUrl = 'http://192.168.82.71:8000'
 export const domain = backendUrl.endsWith('/') ? backendUrl.substr(0, backendUrl.length - 1) : backendUrl
 
 //  Add Base URL and change snake_case to camelCase
 const baseAxios = axios.create({
-    baseURL: `${domain}/`,
+    baseURL: `${domain}`,
     transformResponse: [...axios.defaults.transformResponse, humps.camelizeKeys],
     transformRequest: [decamelize, ...axios.defaults.transformRequest],
 })

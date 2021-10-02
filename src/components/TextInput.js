@@ -1,16 +1,16 @@
 import React from "react";
-import {StyleSheet, Text, View} from "react-native";
-import { TextInput as Input } from 'react-native-paper'
+import { StyleSheet, Text, View, TextInput } from "react-native";
 import { theme } from "./theme";
+import {normalize} from "../utils/normalize";
 
-export default function TextInput({ errorText, description, ...props}) {
+export default function Input({ errorText, description, ...props}) {
     return (
         <View style={styles.container}>
-            <Input
+            <TextInput
             style={styles.input}
-            selectionColor={theme.colors.primary}
-            underlineColor="transparent"
+            selectionColor={theme.colors.white}
             mode="outlined"
+            placeholderTextColor='white'
             {...props}
             />
             {description && !errorText ? (
@@ -22,21 +22,29 @@ export default function TextInput({ errorText, description, ...props}) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        marginVertical: 12,
-    },
-    input: {
-        backgroundColor: theme.colors.surface,
-    },
     description: {
         fontSize: 13,
         color: theme.colors.secondary,
-        paddingTop: 8,
+        paddingTop: -10,
+        paddingHorizontal: 15
     },
     error: {
         fontSize: 13,
         color: theme.colors.error,
-        paddingTop: 8
-    }
+        marginTop: -5,
+        paddingHorizontal: 15
+    },
+    input: {
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderRadius: normalize(5),
+        borderColor: '#FFFFFF',
+        marginVertical: normalize(10),
+        marginHorizontal: normalize(16),
+        height: normalize(45),
+        fontSize: normalize(15),
+        lineHeight: normalize(18),
+        color: '#FFFFFF',
+        paddingHorizontal: normalize(20),
+        borderWidth: 1
+    },
 })
