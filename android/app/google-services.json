@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "528049907815",
+    "firebase_url": "https://my-todo-app-be96d-default-rtdb.firebaseio.com",
+    "project_id": "my-todo-app-be96d",
+    "storage_bucket": "my-todo-app-be96d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528049907815:android:edf3f22b2ccbfb9024ccc2",
+        "android_client_info": {
+          "package_name": "com.namaz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528049907815-1ft18e4ceb1clhquteu118jv1ckrgcer.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.namaz",
+            "certificate_hash": "c5612b97cba1dfc606b2fafb7d5a6eaf18f7ab0d"
+          }
+        },
+        {
+          "client_id": "528049907815-m2n3r6q10ht8loopv0opurqc6cirt40v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXnX0yThfDelYMxKIviTKMIltjlh6yDcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "528049907815-m2n3r6q10ht8loopv0opurqc6cirt40v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

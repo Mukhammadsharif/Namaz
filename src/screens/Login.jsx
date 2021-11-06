@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { View, StyleSheet, ImageBackground, Text, TouchableOpacity, Image } from 'react-native'
+import React, {useEffect, useState} from 'react'
+import { View, StyleSheet, ImageBackground, Text, TouchableOpacity, Image, Platform } from 'react-native'
 import TextInput from "../components/TextInput";
 import { normalize } from "../utils/normalize"
 import BackgroundImage  from '../assets/images/backgroud.png'
@@ -7,13 +7,15 @@ import Apple from '../assets/icons/apple.png'
 import Google from '../assets/icons/google.png'
 import emailValidator from "../helpers/emailValidator";
 import passwordValidator from "../helpers/passwordValidator";
-import { loginUser } from "../../api/auth-api";
+import { loginUser, googleSignIn } from "../../api/auth-api";
 import firebase from "firebase";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 export default function Login({ navigation }){
     const [email, setEmail] = useState({value: '', error: ''})
     const [password, setPassword] = useState({value: '', error: ''})
     const [loading, setLoading] = useState(false)
+    const [data, setData] = useState(null)
 
     const onLoginPressed = async () => {
         const emailError = emailValidator(email.value)
@@ -27,8 +29,6 @@ export default function Login({ navigation }){
             email: email.value,
             password: password.value
         })
-        let name = firebase.auth().currentUser.uid
-            console.log(name)
         if (response.error){
             alert(response.error)
         } else {
@@ -36,6 +36,30 @@ export default function Login({ navigation }){
         }
         setLoading(false)
     }
+
+    useEffect(() => {
+        GoogleSignin.configure({
+            webClientId: '528049907815-m2n3r6q10ht8loopv0opurqc6cirt40v.apps.googleusercontent.com',
+            offlineAccess: true
+        })
+    }, [])
+
+
+    useEffect(() => {
+        if(data !== null) {
+            if(data.additionalUserInfo.isNewUser) {
+                firebase.database().ref('users/').child(data.user.uid).set({
+                    id: data.user.uid,
+                    name: data.additionalUserInfo.profile.given_name,
+                    email: data.additionalUserInfo.profile.email,
+                    phone: data.user.phoneNumber,
+                    family_id: data.user.uid,
+                    image: data.user.photoURL,
+                })
+            }
+            navigation.navigate('TabScreen')
+        }
+    }, [data])
     return(
         <View>
              <ImageBackground source={BackgroundImage} style={styles.image}>
@@ -73,17 +97,22 @@ export default function Login({ navigation }){
                  <View style={styles.registerWithContainer}>
                      <TouchableOpacity
                           style={styles.registerWithGoogle}
-                          onPress={() => console.log('Pressed')}>
+                          onPress={() => {
+                              googleSignIn()
+                                  .then(response => setData(response))
+                          }}>
                          <Text style={styles.buttonText}>Войти при помощи</Text>
                          <Image source={Google} style={styles.logo}/>
                      </TouchableOpacity>
 
-                      <TouchableOpacity
-                          style={styles.registerWithApple}
-                          onPress={() => console.log('Pressed')}>
-                          <Text style={styles.buttonTextApple}>Войти при помощи</Text>
-                          <Image source={Apple} style={styles.logo}/>
-                     </TouchableOpacity>
+                     {Platform === 'Android' ? (
+                         <TouchableOpacity
+                              style={styles.registerWithApple}
+                              onPress={() => console.log('Pressed')}>
+                              <Text style={styles.buttonTextApple}>Войти при помощи</Text>
+                              <Image source={Apple} style={styles.logo}/>
+                         </TouchableOpacity>
+                     ) : null}
                  </View>
 
                  <View style={styles.accountContainer}>

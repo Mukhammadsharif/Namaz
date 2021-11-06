@@ -16,12 +16,12 @@ import Tree from "./src/screens/Tree"
 import ChatDetail from "./src/screens/ChatDetail"
 import AuthLoadingScreen from "./src/screens/AuthLoadingScreen";
 import { normalize } from "./src/utils/normalize"
-import NamazIcon from './src/assets/icons/icons8-person-kneeling-48.png'
-import NamazIconActive from './src/assets/icons/icons8-man-kneeling-48.png'
+import Papyrus from './src/assets/icons/papyrus.png'
+import PapyrusActive from './src/assets/icons/papyrusActive.png'
 import Compass from './src/assets/icons/icons8-compass-40.png'
 import CompassActive from './src/assets/icons/icons8-compass.gif'
-import ChatIcon from './src/assets/icons/icons8-chat-48.png'
-import ChatIconActive from './src/assets/icons/icons8-chat.gif'
+import ChatIconActive from './src/assets/icons/chat-bubble.png'
+import ChatIcon from './src/assets/icons/chat-bubbleActive.png'
 import CalendarIcon from './src/assets/icons/icons8-calendar-150.png'
 import CalendarIconActive from './src/assets/icons/icons8-calendar.gif'
 import FamilyIcon from './src/assets/icons/icons8-family-150.png'
@@ -91,6 +91,12 @@ function TabScreen() {
     const [chatState, setChatState] = useState(false)
     const [calendarState, setCalendarState] = useState(false)
     const [treeState, setTreeState] = useState(false)
+    const [user, setUser] = useState(null)
+
+
+    firebase.auth().onAuthStateChanged((user) => {
+        setUser(user)
+    })
     return(
         <Tab.Navigator screenOptions={{ tabBarShowLabel: true, tabBarStyle: {...styles.tabBar},
         tabBarLabelStyle: {fontSize: normalize(13), marginBottom: normalize(8)},
@@ -110,7 +116,7 @@ function TabScreen() {
                         options={{
                             tabBarIcon: () => (
                                  <View>
-                                     <Image source={ namazState ? NamazIcon: NamazIconActive}
+                                     <Image source={ namazState ? Papyrus: PapyrusActive}
                                      style={{ width: 35, height: 35}}/>
                                  </View>
                             )
@@ -138,7 +144,8 @@ function TabScreen() {
                         }}
             />
 
-            <Tab.Screen name='Чат'
+            {user ? (
+                <Tab.Screen name='Чат'
                         component={Chat}
                         listeners={{
                             tabPress: () => {
@@ -159,8 +166,10 @@ function TabScreen() {
                         }}
             />
 
+            ) : null}
             <Tab.Screen name='Праздник'
                         component={Holiday}
+
                         listeners={{
                             tabPress: () => {
                                 setNamazState(false)
@@ -180,7 +189,8 @@ function TabScreen() {
                         }}
             />
 
-            <Tab.Screen name='Дерево'
+            {user ? (
+                <Tab.Screen name='Древо'
                         component={Tree}
                         listeners={{
                             tabPress: () => {
@@ -201,6 +211,7 @@ function TabScreen() {
                         }}
             />
 
+            ) : null}
         </Tab.Navigator>
     )
 }

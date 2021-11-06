@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import firebase from '../../config'
 import AddFamilyMemberModal from "../components/AddFamilyMemberModal";
 import {v4 as uuid} from "uuid";
+
 export default function Tree() {
     const navigation = useNavigation()
     const [modalVisible, setModalVisible] = useState(false)

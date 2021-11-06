@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {View, StyleSheet, Text, ScrollView, TouchableOpacity, Image, Alert} from 'react-native'
+import {View, StyleSheet, Text, ScrollView, TouchableOpacity, Image} from 'react-native'
 import AddCompanionModal from "../components/AddCompanionModal";
 import PlusIcon from '../assets/icons/+.png'
 import {normalize} from "../utils/normalize"
@@ -16,7 +16,6 @@ export default function Chat({ navigation }){
     const [companionsList, setCompanionsList] = useState([])
     const [chats, setChats] = useState([])
     const [chatsList, setChatsList] = useState([])
-    const id = firebase.auth().currentUser.uid
     let companions = []
     let list = []
     let chatList = []
@@ -138,7 +137,6 @@ export default function Chat({ navigation }){
                 </TouchableOpacity>
             </View>
             <ScrollView>
-                {/*{console.log(chatsList)}*/}
                 {chatsList ? chatsList.map(item => (
                     <Companion navigation={navigation} item={item} key={item.key}/>
                 )) : null}
