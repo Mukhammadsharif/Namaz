@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, ImageBackground, Image, PermissionsAndroid } from "react-native"
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { createDrawerNavigator } from '@react-navigation/drawer'
 import { createStackNavigator } from "@react-navigation/stack"
 import  firebase from 'firebase'
 import { firebaseConfig } from "./config";
@@ -14,7 +15,8 @@ import Chat from "./src/screens/Chat"
 import Holiday from "./src/screens/Holiday"
 import Tree from "./src/screens/Tree"
 import ChatDetail from "./src/screens/ChatDetail"
-import AuthLoadingScreen from "./src/screens/AuthLoadingScreen";
+import AuthLoadingScreen from "./src/screens/AuthLoadingScreen"
+import Profile from "./src/screens/Profile";
 import { normalize } from "./src/utils/normalize"
 import Papyrus from './src/assets/icons/papyrus.png'
 import PapyrusActive from './src/assets/icons/papyrusActive.png'
@@ -30,6 +32,7 @@ import {StatusBar} from "expo-status-bar";
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
+const Drawer = createDrawerNavigator()
 
 export default function Navigation(){
     async function requestLocationPermission() {
@@ -39,7 +42,6 @@ export default function Navigation(){
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                 console.log("You can use the location");
-                // alert("Can I use location?");
             } else {
                 console.log("location permission denied");
                 alert("Location permission denied");
@@ -71,14 +73,15 @@ export default function Navigation(){
             {/*<StatusBar style='auto'/>*/}
             <NavigationContainer style={styles.navigation} >
                 <Stack.Navigator initialRouteName={AuthLoadingScreen} screenOptions={{
-                headerTitle: () => null, header: null
-            }} >
+                    headerTitle: () => null, header: null
+                }} >
                     <Stack.Screen name="AuthLoadingScreen" component={AuthLoadingScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
                     <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
                     <Stack.Screen name="TabScreen" component={TabScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="Chat" component={Chat} options={{ headerShown: false }} />
                     <Stack.Screen name="ChatDetail" component={ChatDetail} options={{ headerShown: false }} />
+                    <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
                 </Stack.Navigator>
             </NavigationContainer>
         </SafeAreaProvider>
@@ -214,6 +217,15 @@ function TabScreen() {
             ) : null}
         </Tab.Navigator>
     )
+}
+
+function MyDrawer() {
+      return (
+        <Drawer.Navigator>
+          <Drawer.Screen name="Feed" component={Chat} />
+          <Drawer.Screen name="Article" component={Tree} />
+        </Drawer.Navigator>
+      );
 }
 
 const styles = StyleSheet.create({

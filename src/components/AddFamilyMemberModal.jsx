@@ -5,11 +5,11 @@ import { View,
     TouchableOpacity,
     StyleSheet,
     Image,
-    Picker,
     TextInput,
     KeyboardAvoidingView,
     Platform,
 } from 'react-native'
+import { Picker } from '@react-native-picker/picker'
 import ImagePicker from 'react-native-image-crop-picker';
 import {normalize} from "../utils/normalize"
 import modalIcon from '../assets/icons/modalButton.png'
@@ -28,10 +28,12 @@ export default function AddFamilyMemberModal({
                                                     editedAge,
                                                     editedDescription,
                                                     editedUri,
+                                                    editedPhone,
                                                     setEditedName,
                                                     setEditedSurname,
                                                     setEditedAge,
                                                     setEditedDescription,
+                                                    setEditedPhone,
                                                     setEditedUri,
                                                     updateMember,
                                                     editedKey,
@@ -45,6 +47,7 @@ export default function AddFamilyMemberModal({
     const [description, setDescription] = useState('')
     const [age, setAge] = useState('')
     const [uri, setUri] = useState(null)
+    const [phone, setPhone] = useState('')
     const id = firebase.auth().currentUser.uid
 
     const getImages = async () => {
@@ -71,7 +74,8 @@ export default function AddFamilyMemberModal({
                  family_id: firebase.auth().currentUser.uid,
                  age: age,
                  born: date,
-                 died: date_
+                 died: date_,
+                 phone: phone
              }).then(r => console.log(r))
     }
 
@@ -153,7 +157,6 @@ export default function AddFamilyMemberModal({
                                     value={editedKey ? editedAge : age}
                                     onChangeText={editedKey ? setEditedAge : setAge}
                                 />
-                                {console.log('age' + age, 'edited' + editedAge)}
                             </View>
 
                             <View>
@@ -163,6 +166,16 @@ export default function AddFamilyMemberModal({
                                     style={styles.input}
                                     value={editedKey ? editedDescription : description}
                                     onChangeText={editedKey ? setEditedDescription : setDescription}
+                                />
+                            </View>
+
+                            <View style={{marginTop: 15}}>
+                                <TextInput
+                                    placeholder='Номер телефона'
+                                    placeholderText='#494949'
+                                    style={styles.input}
+                                    value={editedKey ? editedPhone : phone}
+                                    onChangeText={editedKey ? setEditedPhone : setPhone}
                                 />
                             </View>
 
@@ -196,7 +209,7 @@ export default function AddFamilyMemberModal({
 const styles = StyleSheet.create({
      modal: {
         backgroundColor: '#F8F8F8',
-        minHeight: normalize(480),
+        minHeight: normalize(520),
         width: normalize(380),
         position: 'absolute',
         bottom: normalize(65),

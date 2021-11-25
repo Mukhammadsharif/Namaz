@@ -5,7 +5,8 @@ import Message from "../components/Message"
 import chevronLeft from '../assets/icons/chevronLeft.png'
 import userImage from '../assets/images/companion.png'
 import filesIcon from '../assets/icons/files.png'
-import voiceIcon from '../assets/icons/voice-message-microphone-button.png'
+// import voiceIcon from '../assets/icons/voice-message-microphone-button.png'
+import sendMessageIcon from '../assets/icons/send_message.png'
 import { SendMessage, ReceiveMessage} from "../components/Messages";
 import firebase from '../../config'
 
@@ -100,7 +101,7 @@ export default function ChatDetail({ navigation, route }) {
                     style={styles.filesIconContainer}
                     onPress={() => sendMessage()}
                 >
-                    <Image source={voiceIcon} style={styles.filesIcon} />
+                    <Image source={sendMessageIcon} style={styles.filesIcon} />
                 </TouchableOpacity>
             </KeyboardAvoidingView>
         </View>
@@ -126,7 +127,8 @@ const styles = StyleSheet.create({
     userStatus: {
         fontSize: normalize(13),
         lineHeight: normalize(16),
-        color: '#FFFFFF'
+        color: '#FFFFFF',
+        marginLeft: normalize(-15)
     },
     chevronLeft: {
         width: normalize(11),

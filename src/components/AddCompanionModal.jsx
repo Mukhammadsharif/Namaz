@@ -3,8 +3,7 @@ import { View, TextInput, Text, StyleSheet, Modal, Button } from 'react-native'
 import { normalize } from "../utils/normalize";
 
 export default function AddCompanionModal({ modalVisible, setModalVisible,
-                                              phone, setPhone, setLoading, loading,
-                                              setCompanionList}) {
+                                              phone, setPhone, setLoading, loading}) {
 
     return (
         <View>

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, Button, SafeAreaView } from 'react-native'
-import {Card, Paragraph, Title} from 'react-native-paper'
+import {Card, Paragraph} from 'react-native-paper'
 import { normalize } from "../utils/normalize";
 import PlusIcon from '../assets/icons/+.png'
 import EditIcon from '../assets/icons/icons8-edit-480.png'
 import DeleteIcon from '../assets/icons/icons8-delete-512.png'
-import { logOut } from "../../api/auth-api";
+import ChatIcon from '../assets/icons/chat-Icon.png'
 import { useNavigation } from "@react-navigation/native";
 import firebase from '../../config'
 import AddFamilyMemberModal from "../components/AddFamilyMemberModal";
-import {v4 as uuid} from "uuid";
 
 export default function Tree() {
     const navigation = useNavigation()
@@ -26,6 +25,10 @@ export default function Tree() {
     const [editedAge, setEditedAge] = useState('')
     const [editedUri, setEditedUri] = useState(null)
     const [editedKey, setEditedKey] = useState(null)
+    const [editedPhone, setEditedPhone] = useState(null)
+
+    const [user, setUser] = useState([])
+    const [companion, setCompanion] = useState([])
 
     let members = []
     let editedArray = []
@@ -59,21 +62,21 @@ export default function Tree() {
                  name: editedName,
                  surname: editedSurname,
                  description: editedDescription,
-                 image: editedUri,
+                 image: editedUri ? editedUri : null,
                  age: editedAge,
                  born: editedDate,
-                 died: editedDate_
+                 died: editedDate_,
+                 phone: editedPhone
              }).then(r => {
-                                    console.log(r)
-                                    setEditedKey(null)
-                                    setEditedName('')
-                                    setEditedSurname('')
-                                    setEditedAge('')
-                                    setEditedDescription('')
-                                    setEditedUri(null)
-                                    setModalVisible(false)
+                 setEditedKey(null)
+                 setEditedName('')
+                 setEditedSurname('')
+                 setEditedAge('')
+                 setEditedDescription('')
+                 setEditedUri(null)
+                 setEditedPhone(null)
+                 setModalVisible(false)
              })
-         console.log(editedAge)
     }
 
     useEffect(() => {
@@ -93,6 +96,7 @@ export default function Tree() {
             setEditedDescription(item.val().description)
             setEditedAge(item.val().age)
             setEditedUri(item.val().image)
+            setEditedPhone(item.val().phone)
             setEditedKey(item.key)
         })
     }, [edited])
@@ -107,7 +111,44 @@ export default function Tree() {
             })
         }
         setFamily(members.reverse())
+
+        return () => {
+            setCompanion([])
+        }
     }, [tree])
+
+
+    const getCompanion = async (phone) => {
+        firebase.database().ref('users/')
+            .orderByChild('phone')
+            .equalTo(phone)
+            .on('value', snapshot => {
+                snapshot.forEach(item => {
+                    setUser(item)
+                })
+            })
+        if(user !== []) {
+            await setCompanionList(user.key)
+        }
+    }
+
+    const setCompanionList = (key) => {
+        const uid = firebase.auth().currentUser.uid
+        firebase.database().ref('users/' + uid)
+                .child('companion')
+                .on('value', snapshot => {
+                   snapshot.forEach(item => {
+                       item.forEach(data => {
+                           setCompanion([...companion, data.val()])
+                       })
+                   })
+                })
+             if (companion && companion.includes(key) === false) {
+                 firebase.database().ref('users/' + uid).child('companion').push({
+                     companion: key
+                 })
+             }
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -130,6 +171,7 @@ export default function Tree() {
                               }}>ФИО: {item.val().name}</Paragraph>
                             </Card.Content>
                             <Paragraph style={{marginLeft: 90, marginRight: 40}}>Описание: {item.val().description}</Paragraph>
+
                             <View style={styles.iconsContainer}>
                                 <TouchableOpacity onPress={() => editItem(item.key)}>
                                     <Image source={EditIcon} style={styles.icon}/>
@@ -137,6 +179,13 @@ export default function Tree() {
 
                                 <TouchableOpacity onPress={() => deleteItem(item.key)}>
                                     <Image source={DeleteIcon} style={styles.icon}/>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => {
+                                    getCompanion(item.val().phone)
+                                    navigation.navigate('Chat')
+                                }}>
+                                    <Image source={ChatIcon} style={styles.icon}/>
                                 </TouchableOpacity>
                             </View>
                         </Card>
@@ -146,10 +195,16 @@ export default function Tree() {
                 <View style={{flexDirection: 'row', marginTop: normalize(15)}}>
 
                 </View>
-                <Button title="Logout" onPress={() => {
-                    logOut()
-                    navigation.navigate('Login')
-                }}/>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate('Profile')
+                    }}
+                    style={styles.settingsContainer}
+                >
+                    <Text style={styles.settingsText}>Настройки</Text>
+                </TouchableOpacity>
+
 
 
 
@@ -162,6 +217,8 @@ export default function Tree() {
                     editedAge={editedAge}
                     editedDescription={editedDescription}
                     editedUri={editedUri}
+                    editedPhone={editedPhone}
+                    setEditedPhone={setEditedPhone}
                     setEditedName={setEditedName}
                     setEditedSurname={setEditedSurname}
                     setEditedAge={setEditedAge}
@@ -234,5 +291,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginHorizontal: normalize(50),
         marginVertical: normalize(10)
-    }
+    },
+    settingsContainer: {
+        backgroundColor: '#d7d0d0',
+        height: normalize(35),
+        marginLeft: normalize(20),
+        marginRight: normalize(40),
+        marginBottom: normalize(10),
+        borderRadius: normalize(15),
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    settingsText: {
+        fontSize: normalize(17),
+        fontWeight: 'bold',
+    },
 })

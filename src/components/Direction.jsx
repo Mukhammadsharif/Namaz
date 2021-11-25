@@ -19,7 +19,6 @@ export default function Direction(){
         Geolocation.getCurrentPosition(info =>{
         setLatitude(info.coords.latitude)
         setLongitude(info.coords.longitude)
-        console.log('A')
     })
     }, [])
 

@@ -57,15 +57,15 @@ export default function Chat({ navigation }){
                  firebase.database().ref('users/' + uid)
                 .child('companion')
                 .on('value', snapshot => {
-                   setCompanion(snapshot)
+                    setCompanion(snapshot)
                 })
     }
 
     useEffect(() => {
         if (companion) {
                 companion.forEach(item => {
-                list.push(item)
-               })
+                    list.push(item)
+                })
                 setCompanionsList(list)
             }
     }, [companion])
@@ -94,7 +94,6 @@ export default function Chat({ navigation }){
         let set = []
         array.map(item => {
             set.push(item)
-            console.log(chats)
         })
         setChats(set)
     }
@@ -136,6 +135,7 @@ export default function Chat({ navigation }){
                      <Image source={PlusIcon} style={styles.plusIcon}/>
                 </TouchableOpacity>
             </View>
+
             <ScrollView>
                 {chatsList ? chatsList.map(item => (
                     <Companion navigation={navigation} item={item} key={item.key}/>

@@ -27,23 +27,20 @@ export default function Companion({ navigation, item }) {
     useEffect(() => {
         newMessages = messages.filter(message => message.val().guestUid === item.key)
         setNewMessages_(newMessages)
-         // console.log('newMessages'+newMessages)
     }, [messages])
 
     useEffect(() => {
-        // console.log(newMessages_)
         if(newMessages_ && newMessages_.length < 1) {
             setLastMessages(null)
         } else {
             setLastMessages(newMessages_)
         }
-         // console.log('last'+lastMessages)
     }, [newMessages_])
 
     return (
         <View>
             <TouchableOpacity style={styles.container} onPress={() => {
-                    navigation.navigate('ChatDetail', {name: item.val().name, guestId: item.val().id})
+                    navigation.navigate('ChatDetail', { name: item.val().name, guestId: item.val().id })
                 }}>
                 <View>
                     <Image source={CompanionImage} style={styles.image}/>

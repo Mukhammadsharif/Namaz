@@ -26,10 +26,6 @@ export default function Namaz(){
     const [prayTime, setPrayTime] = useState(null)
 
 
-    useEffect(() => {
-        console.log(firebase.auth())
-    }, [])
-
     const getCurrentTime = () => {
         let hour = new Date().getHours()
         let minutes = new Date().getMinutes()

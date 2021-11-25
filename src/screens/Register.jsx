@@ -42,7 +42,6 @@ export default function Register(){
         })
 
             let uid = firebase.auth().currentUser.uid
-            console.log(uid)
             await firebase.database().ref('users/').child(uid).set({
                  id: uid,
                  name: name.value,

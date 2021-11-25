@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-community/async-storage'
 
 export function usePersistState(key, defaultValue) {
     const [value, setValue] = useState('')
