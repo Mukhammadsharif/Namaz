@@ -35,6 +35,9 @@ const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator()
 
 export default function Navigation(){
+
+    const [religious, setReligious] = useState(true)
+
     async function requestLocationPermission() {
         try {
             const granted = await PermissionsAndroid.request(
@@ -78,17 +81,21 @@ export default function Navigation(){
                     <Stack.Screen name="AuthLoadingScreen" component={AuthLoadingScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
                     <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-                    <Stack.Screen name="TabScreen" component={TabScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="TabScreen" options={{ headerShown: false }} >
+                        {props => (<TabScreen {...props} religios={religious}/>)}
+                    </Stack.Screen>
                     <Stack.Screen name="Chat" component={Chat} options={{ headerShown: false }} />
                     <Stack.Screen name="ChatDetail" component={ChatDetail} options={{ headerShown: false }} />
-                    <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
+                    <Stack.Screen name="Profile" options={{ headerShown: false }}>
+                         {props => (<Profile {...props} religious={religious} setReligious={setReligious}/>)}
+                    </Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>
         </SafeAreaProvider>
     )
 }
 
-function TabScreen() {
+function TabScreen({ religios }) {
     const [namazState, setNamazState] = useState(false)
     const [qiblaState, setQiblaState] = useState(false)
     const [chatState, setChatState] = useState(false)
@@ -102,10 +109,11 @@ function TabScreen() {
     })
     return(
         <Tab.Navigator screenOptions={{ tabBarShowLabel: true, tabBarStyle: {...styles.tabBar},
-        tabBarLabelStyle: {fontSize: normalize(13), marginBottom: normalize(8)},
-        header: () => null
+            tabBarLabelStyle: {fontSize: normalize(13), marginBottom: normalize(8)},
+            header: () => null
         }}>
-            <Tab.Screen name='Намаз'
+            {religios ? (
+                <Tab.Screen name='Намаз'
                         component={Namaz}
                         listeners={{
                             tabPress: () => {
@@ -126,6 +134,7 @@ function TabScreen() {
                         }}
             />
 
+            ) : null }
             <Tab.Screen name='Кибла'
                         component={Qibla}
                         listeners={{
@@ -170,7 +179,9 @@ function TabScreen() {
             />
 
             ) : null}
-            <Tab.Screen name='Праздник'
+
+            {religios ? (
+                <Tab.Screen name='Праздник'
                         component={Holiday}
 
                         listeners={{
@@ -191,6 +202,7 @@ function TabScreen() {
                             )
                         }}
             />
+            ) : null }
 
             {user ? (
                 <Tab.Screen name='Древо'

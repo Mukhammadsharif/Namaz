@@ -40,7 +40,12 @@ export default function Companion({ navigation, item }) {
     return (
         <View>
             <TouchableOpacity style={styles.container} onPress={() => {
-                    navigation.navigate('ChatDetail', { name: item.val().name, guestId: item.val().id })
+                    navigation.navigate('ChatDetail', {
+                        name: item.val().name,
+                        guestId: item.val().id,
+                        status: item.val().status,
+                        visibility: item.val().visibility,
+                    })
                 }}>
                 <View>
                     <Image source={CompanionImage} style={styles.image}/>

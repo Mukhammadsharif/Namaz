@@ -12,7 +12,7 @@ import firebase from '../../config'
 
 export default function ChatDetail({ navigation, route }) {
     const [message, setMessage] = useState('')
-    const { name, guestId } = route.params
+    const { name, guestId, status, visibility } = route.params
     const currentUserId = firebase.auth().currentUser.uid
     const [messages, setMessages] = useState([])
     let allMessages = []
@@ -58,9 +58,9 @@ export default function ChatDetail({ navigation, route }) {
                     <Text style={styles.chats}>Чаты</Text>
                  </TouchableOpacity>
 
-                 <View>
+                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
                      <Text style={styles.chatHeaderText}> { name } </Text>
-                     <Text style={styles.userStatus}>был(а) 5 мин назад</Text>
+                     <Text style={styles.userStatus}>{visibility ? status ? 'онлайн' : "был(а) недавно" : null}</Text>
                  </View>
 
                  <View>
@@ -74,7 +74,7 @@ export default function ChatDetail({ navigation, route }) {
                 onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
             >
                 {messages ? messages.map(item => (
-                    <Message item={item}/>
+                    <Message item={item} key={item.val().created_at}/>
                 )): null}
             </ScrollView>
 
@@ -123,12 +123,13 @@ const styles = StyleSheet.create({
         fontSize: normalize(20),
         lineHeight: normalize(21),
         color: '#FFFFFF',
+        textAlign: 'center',
     },
     userStatus: {
         fontSize: normalize(13),
         lineHeight: normalize(16),
         color: '#FFFFFF',
-        marginLeft: normalize(-15)
+        marginLeft: normalize(0)
     },
     chevronLeft: {
         width: normalize(11),
