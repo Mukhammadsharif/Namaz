@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Image, PermissionsAndroid } from "react-native"
+import { StyleSheet, View, Image, PermissionsAndroid, AppState } from "react-native"
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { createStackNavigator } from "@react-navigation/stack"
-import  firebase from 'firebase'
 import { firebaseConfig } from "./config";
 import { SafeAreaProvider } from "react-native-safe-area-context/src/SafeAreaContext"
 import Register from './src/screens/Register'
@@ -30,6 +29,7 @@ import FamilyIcon from './src/assets/icons/icons8-family-150.png'
 import FamilyIconActive from './src/assets/icons/icons8-family.gif'
 import {StatusBar} from "expo-status-bar";
 import {MusicContext, music, value, GlobalProvider} from "./src/utils/context";
+import firebase from 'firebase'
 
 
 

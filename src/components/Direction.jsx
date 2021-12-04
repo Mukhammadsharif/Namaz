@@ -9,8 +9,8 @@ export default function Direction(){
     const [longitude, setLongitude] = useState(null)
     const [direction, setDirection] = useState(null)
 
-    const getDirection = () => {
-        axios.get(` http://api.aladhan.com/v1/qibla/${latitude}/${longitude}`)
+    const getDirection = async () => {
+        await axios.get(` http://api.aladhan.com/v1/qibla/${latitude}/${longitude}`)
             .then(res => setDirection(res.data.data.direction))
             .catch(err => console.log(err))
     }
@@ -23,12 +23,14 @@ export default function Direction(){
     }, [])
 
     useEffect(() => {
-        getDirection()
-    }, [longitude])
+        if(longitude !== null && latitude !== null) {
+            getDirection()
+        }
+    }, [longitude, latitude])
 
     return(
         <View>
-            <Text style={styles.direction}>{Math.round(direction * 1) / 1}°</Text>
+            <Text style={styles.direction}>{direction ? Math.round(direction * 1) : null}°</Text>
         </View>
     )
 }

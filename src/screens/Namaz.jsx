@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, ImageBackground, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import {View, ImageBackground, Text, StyleSheet, TouchableOpacity, Image, AppState} from 'react-native'
 import Geolocation from '@react-native-community/geolocation'
 import axios from "axios"
 import {normalize} from "../utils/normalize"
@@ -9,7 +9,7 @@ import Down from '../assets/images/down.png'
 import Dusk from '../assets/images/dusk.png'
 import Night from '../assets/images/night.png'
 import Gps from '../assets/icons/gps.png'
-import firebase from "../../config";
+import firebase from '../../config'
 
 
 export default function Namaz(){
@@ -24,6 +24,8 @@ export default function Namaz(){
     const [latitude, setLatitude] = useState(null)
     const [longitude, setLongitude] = useState(null)
     const [prayTime, setPrayTime] = useState(null)
+
+    const uid = firebase.auth().currentUser.uid
 
 
     const getCurrentTime = () => {
@@ -99,30 +101,16 @@ export default function Namaz(){
             }).catch(error => console.log(error))
     }
 
-    // const getDhuhrTime = () => {
-    //     if(prayTime) {
-    //         const hour = new Date().getHours()
-    //         const minutes = new Date().getMinutes()
-    //         const sum = hour * 60 + minutes
-    //         const dhuhrHour = prayTime.Dhuhr.substring(0,2)
-    //         const dhuhrMinutes = prayTime.Dhuhr.substring(3,5)
-    //         const sumDhuhr = parseInt(dhuhrHour) * 60 + parseInt(dhuhrMinutes)
-    //         const day = 24 * 60
-    //         const differenceTime = day - sum
-    //         const differenceDhuhr = day - sumDhuhr
-    //
-    //         if(differenceTime < differenceDhuhr) {
-    //             const difference = differenceDhuhr - differenceTime
-    //             const a = difference / 60
-    //             const b = difference % 60
-    //             return console.log(a)
-    //         } else if (differenceTime > differenceDhuhr) {
-    //             console.log(differenceTime - differenceDhuhr )
-    //         } else {
-    //             console.log('Ok')
-    //         }
-    //     }
-    // }
+
+    AppState.addEventListener('change', state => {
+          if (state === 'active') {
+            firebase.database().ref('users/' + uid)
+            .update({status: true})
+          } else if (state === 'background') {
+              firebase.database().ref('users/' + uid)
+                .update({status: false})
+          }
+        });
 
     useEffect(() => {
         let timer = setInterval(() => {
@@ -143,7 +131,6 @@ export default function Namaz(){
     useEffect(() => {
         getCityName()
         getPrayTime()
-        // return getDhuhrTime()
     }, [longitude])
 
     return(
