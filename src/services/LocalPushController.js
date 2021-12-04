@@ -22,46 +22,6 @@ PushNotification.createChannel(
       importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
       vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
     },
-    // {
-    //   channelId: "sound_channel2", // (required)
-    //   channelName: "Notification", // (required)
-    //   channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
-    //   playSound: true, // (optional) default: true
-    //   soundName: "second.mp3",
-    //   // (optional) See `soundName` parameter of `localNotification` function
-    //   importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-    //   vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-    // },
-    // {
-    //   channelId: "sound_channel3", // (required)
-    //   channelName: "Notification", // (required)
-    //   channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
-    //   playSound: true, // (optional) default: true
-    //   soundName: "third.mp3",
-    //   // (optional) See `soundName` parameter of `localNotification` function
-    //   importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-    //   vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-    // },
-    // {
-    //   channelId: "sound_channel4", // (required)
-    //   channelName: "Notification", // (required)
-    //   channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
-    //   playSound: true, // (optional) default: true
-    //   soundName: "fourth.mp3",
-    //   // (optional) See `soundName` parameter of `localNotification` function
-    //   importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-    //   vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-    // },
-    // {
-    //   channelId: "sound_channel5", // (required)
-    //   channelName: "Notification", // (required)
-    //   channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
-    //   playSound: true, // (optional) default: true
-    //   soundName: "fifth.mp3",
-    //   // (optional) See `soundName` parameter of `localNotification` function
-    //   importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-    //   vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-    // },
     (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
 );
 
@@ -85,7 +45,6 @@ export const LocalScheduleNotification = (timeId, message, hour, minute, music) 
     } else if (music === 'fifth') {
         channelId = '5'
     }
-    console.log(channelId, music)
 
      PushNotification.localNotificationSchedule({
       id: parseInt(timeId),

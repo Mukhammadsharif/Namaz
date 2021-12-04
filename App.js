@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, ImageBackground, Image, PermissionsAndroid } from "react-native"
+import { StyleSheet, View, Image, PermissionsAndroid } from "react-native"
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createDrawerNavigator } from '@react-navigation/drawer'
@@ -30,6 +30,9 @@ import FamilyIcon from './src/assets/icons/icons8-family-150.png'
 import FamilyIconActive from './src/assets/icons/icons8-family.gif'
 import {StatusBar} from "expo-status-bar";
 import {MusicContext, music, value, GlobalProvider} from "./src/utils/context";
+
+
+
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
