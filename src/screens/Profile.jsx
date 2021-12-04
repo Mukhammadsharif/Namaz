@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, Image} from "react-native"
 import {normalize} from "../utils/normalize";
 import { useNavigation } from '@react-navigation/native'
@@ -7,10 +7,30 @@ import StatusSwitch from "../components/StatusSwitch";
 import TreeSwitch from "../components/TreeSwitch";
 import ReligiousSwitch from "../components/ReligiousSwitch";
 import { Picker } from '@react-native-picker/picker'
+import { MusicContext } from "../utils/context";
+import AsyncStorage from '@react-native-community/async-storage'
 
 export default function Profile({ religious, setReligious }) {
     const navigation = useNavigation()
-    const [selectedValue, setSelectedValue] = useState('Пол')
+    const { setMusic, music } = useContext(MusicContext)
+    const [selectedValue, setSelectedValue] = useState('first')
+
+    const getSong = async () => {
+        let sound = await AsyncStorage.getItem('music')
+        setSelectedValue(sound)
+    }
+
+    useEffect(() => {
+        getSong()
+    }, [])
+
+    useEffect(() => {
+        setMusic(selectedValue)
+        AsyncStorage.setItem('music', selectedValue)
+        selectedValue === music ? getSong() : null
+    }, [selectedValue])
+
+
     return (
         <View style={{ flex: 1}}>
             <View style={styles.chatHeaderContainer}>
@@ -43,12 +63,11 @@ export default function Profile({ religious, setReligious }) {
                         style={{ height: 50, width: 150 }}
                         onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
                     >
-                        <Picker.Item label="1" value="1" />
-                        <Picker.Item label="2" value="2" />
-                        <Picker.Item label="3" value="3" />
-                        <Picker.Item label="4" value="4" />
-                        <Picker.Item label="5" value="5" />
-                        <Picker.Item label="6" value="6" />
+                        <Picker.Item label="1" value="first" />
+                        <Picker.Item label="2" value="second" />
+                        <Picker.Item label="3" value="third" />
+                        <Picker.Item label="4" value="fourth" />
+                        <Picker.Item label="5" value="fifth" />
                     </Picker>
                 </View>
 

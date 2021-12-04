@@ -54,6 +54,7 @@
     "react-native-safe-area-context": "^3.3.0",
     "react-native-screens": "^3.5.0",
     "react-native-sensors": "^7.3.2",
+    "react-native-sound": "^0.11.1",
     "react-native-svg": "^12.1.1",
     "react-native-switch": "^2.0.0",
     "react-native-unimodules": "~0.14.5",

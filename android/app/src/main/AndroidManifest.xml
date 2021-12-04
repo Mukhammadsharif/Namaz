@@ -23,6 +23,12 @@
   >
     <meta-data android:name="expo.modules.updates.EXPO_UPDATE_URL" android:value="YOUR-APP-URL-HERE"/>
     <meta-data android:name="expo.modules.updates.EXPO_SDK_VERSION" android:value="YOUR-APP-SDK-VERSION-HERE"/>
+
+    <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_name.channel_id"
+        android:value="my_sound"/>
+    <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_description.CHANNEL_ID"
+        android:value="my_sound"/>
+
     <meta-data  android:name="com.dieam.reactnativepushnotification.notification_foreground"
                     android:value="true"/>
     <meta-data  android:name="com.dieam.reactnativepushnotification.notification_color"

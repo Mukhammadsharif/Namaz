@@ -29,6 +29,7 @@ import CalendarIconActive from './src/assets/icons/icons8-calendar.gif'
 import FamilyIcon from './src/assets/icons/icons8-family-150.png'
 import FamilyIconActive from './src/assets/icons/icons8-family.gif'
 import {StatusBar} from "expo-status-bar";
+import {MusicContext, music, value, GlobalProvider} from "./src/utils/context";
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -72,7 +73,7 @@ export default function Navigation(){
             }
         })
     return (
-        <SafeAreaProvider>
+        <GlobalProvider>
             {/*<StatusBar style='auto'/>*/}
             <NavigationContainer style={styles.navigation} >
                 <Stack.Navigator initialRouteName={AuthLoadingScreen} screenOptions={{
@@ -91,7 +92,7 @@ export default function Navigation(){
                     </Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>
-        </SafeAreaProvider>
+        </GlobalProvider>
     )
 }
 
@@ -103,10 +104,10 @@ function TabScreen({ religios }) {
     const [treeState, setTreeState] = useState(false)
     const [user, setUser] = useState(null)
 
-
     firebase.auth().onAuthStateChanged((user) => {
         setUser(user)
     })
+
     return(
         <Tab.Navigator screenOptions={{ tabBarShowLabel: true, tabBarStyle: {...styles.tabBar},
             tabBarLabelStyle: {fontSize: normalize(13), marginBottom: normalize(8)},
