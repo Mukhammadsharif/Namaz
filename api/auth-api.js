@@ -21,9 +21,7 @@ export async function signUpUser({ name, email, password }) {
         await firebase.auth().currentUser.updateProfile({displayName: name})
         return { user }
     } catch (error) {
-        return {
-            error: error.message
-        }
+        alert('Этот адрес электронной почты уже используется. Попробуйте другой.')
     }
 }
 

@@ -16,6 +16,7 @@ import Tree from "./src/screens/Tree"
 import ChatDetail from "./src/screens/ChatDetail"
 import AuthLoadingScreen from "./src/screens/AuthLoadingScreen"
 import Profile from "./src/screens/Profile";
+import UserFamilyScreen from './src/screens/UserFamilyScreen'
 import { normalize } from "./src/utils/normalize"
 import Papyrus from './src/assets/icons/papyrus.png'
 import PapyrusActive from './src/assets/icons/papyrusActive.png'
@@ -93,6 +94,7 @@ export default function Navigation(){
                     <Stack.Screen name="Profile" options={{ headerShown: false }}>
                          {props => (<Profile {...props} religious={religious} setReligious={setReligious}/>)}
                     </Stack.Screen>
+                    <Stack.Screen name="UserFamilyScreen" component={UserFamilyScreen} options={{ headerShown: false }} />
                 </Stack.Navigator>
             </NavigationContainer>
         </GlobalProvider>

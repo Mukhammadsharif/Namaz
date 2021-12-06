@@ -1,5 +1,5 @@
 import React, { useState} from 'react'
-import { View, StyleSheet, ImageBackground, Text, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native'
+import { View, StyleSheet, ImageBackground, Text, TouchableOpacity, SafeAreaView, ScrollView, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { normalize } from "../utils/normalize"
 import BackgroundImage  from '../assets/images/backgroud.png'
@@ -52,14 +52,15 @@ export default function Register(){
              }).then(r => console.log(r))
 
         if (response.error){
-            alert(response.error)
+            console.log('err' + response.error)
+            Alert.alert(response.error)
         } else {
             navigation.navigate('TabScreen')
         }
         setLoading(false)
         }
         else {
-            alert('Пароли не совпадают')
+            Alert.alert('Пароли не совпадают')
         }
     }
 
@@ -111,7 +112,9 @@ export default function Register(){
                           />
                            <TextInput
                               placeholder='Повторить пароль'
+                              placeholderTextColor='#FFFFFF'
                               onChangeText={(text) => setPassword2({value:text, error: ''})}
+                              secureTextEntry
                           />
 
                           <TouchableOpacity

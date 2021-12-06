@@ -58,10 +58,12 @@ export default function ChatDetail({ navigation, route }) {
                     <Text style={styles.chats}>Чаты</Text>
                  </TouchableOpacity>
 
-                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                 <TouchableOpacity
+                     style={{justifyContent: 'center', alignItems: 'center'}}
+                     onPress={() => navigation.navigate('UserFamilyScreen', {guestId: guestId, name: name})}>
                      <Text style={styles.chatHeaderText}> { name } </Text>
                      <Text style={styles.userStatus}>{visibility ? status ? 'онлайн' : "был(а) недавно" : null}</Text>
-                 </View>
+                 </TouchableOpacity>
 
                  <View>
                      <Image source={userImage} style={styles.userImage}/>

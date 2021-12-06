@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import { View,
     Modal,
     Text,
@@ -8,6 +8,7 @@ import { View,
     TextInput,
     KeyboardAvoidingView,
     Platform,
+    Alert
 } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import ImagePicker from 'react-native-image-crop-picker';
@@ -17,7 +18,9 @@ import imagePicker1 from '../assets/icons/imagePicker1.png'
 import imagePicker2 from '../assets/icons/imagePicker2.png'
 import DeathDate from "./DeathDate";
 import BirthDate from "./BirthDate";
-import firebase from "../../config";
+// import firebase from "../../config";
+import storage from '@react-native-firebase/storage'
+import {firebase} from '@react-native-firebase/auth'
 import  { v4 as uuid } from 'uuid'
 
 export default function AddFamilyMemberModal({
@@ -48,13 +51,13 @@ export default function AddFamilyMemberModal({
     const [age, setAge] = useState('')
     const [uri, setUri] = useState(null)
     const [phone, setPhone] = useState('')
-    const id = firebase.auth().currentUser.uid
 
-    const getImages = async () => {
-        ImagePicker.openPicker({
-          width: 300,
-          height: 400,
+
+    const getImages = async()  => {
+        ImagePicker.openPicker( {
           cropping: true,
+          skipBackup: true,
+          quality: 1,
         }).then(image => {
              if(editedKey) {
                  setEditedUri(image.path);
@@ -63,6 +66,59 @@ export default function AddFamilyMemberModal({
              }
         });
     }
+
+    useEffect(() => {
+        firebase.auth().signInAnonymously()
+        uri ? uploadImage() : null
+        editedUri ? editedUploadImage(): null
+    }, [uri, editedUri])
+
+    const metadata = {
+      contentType: 'image/jpeg',
+    };
+
+    const uploadImage = async () => {
+          const filename = uri.substring(uri.lastIndexOf('/') + 1);
+          const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+          const task = firebase.storage()
+            .ref(filename)
+            .put(uploadUri);
+          // set progress state
+          task.on('state_changed', snapshot => {
+
+          });
+          try {
+            await task;
+          } catch (e) {
+            console.error(e);
+          }
+          console.log(
+            'Photo uploaded!',
+            'Your photo has been uploaded to Firebase Cloud Storage!'
+          );
+        };
+
+        const editedUploadImage = async () => {
+          const filename = editedUri.substring(editedUri.lastIndexOf('/') + 1);
+          const uploadUri = Platform.OS === 'ios' ? editedUri.replace('file://', '') : editedUri;
+          console.log(uploadUri)
+          const task = storage()
+            .ref(filename)
+            .putFile(uploadUri);
+          // set progress state
+          try {
+            await task;
+          } catch (e) {
+            console.error(e);
+          }
+          console.log(
+            'Photo uploaded!',
+            'Your photo has been uploaded to Firebase Cloud Storage!'
+          );
+        };
+
+
+
 
     const addMember = async () => {
         await firebase.database().ref('family/').child(uuid()).set({

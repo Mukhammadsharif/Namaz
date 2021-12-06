@@ -25,6 +25,8 @@ import expo.modules.updates.UpdatesController;
 import com.facebook.react.bridge.JSIModulePackage;
 import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 
+import io.invertase.firebase.storage.ReactNativeFirebaseStoragePackage;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
