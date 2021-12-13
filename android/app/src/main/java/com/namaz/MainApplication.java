@@ -3,7 +3,7 @@ package com.namaz;
 import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
-
+import com.dooboolab.audiorecorderplayer.RNAudioRecorderPlayerPackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
@@ -42,6 +42,7 @@ public class MainApplication extends Application implements ReactApplication {
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
     }
+
 
     @Override
     protected List<ReactPackage> getPackages() {

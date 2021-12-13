@@ -51,6 +51,7 @@ export default function AddFamilyMemberModal({
     const [age, setAge] = useState('')
     const [uri, setUri] = useState(null)
     const [phone, setPhone] = useState('')
+    const [tillOurTime, setTillOurTime] = useState(true)
 
 
     const getImages = async()  => {
@@ -147,7 +148,10 @@ export default function AddFamilyMemberModal({
             >
                 <View style={styles.modal}>
 
-                    <TouchableOpacity style={styles.iconContainer} onPress={() => setModalVisible(false)}>
+                    <TouchableOpacity style={styles.iconContainer} onPress={() => {
+                        setModalVisible(false)
+                        setTillOurTime(true)
+                    }}>
                         <Image source={modalIcon} style={styles.icon}/>
                     </TouchableOpacity>
 
@@ -201,8 +205,16 @@ export default function AddFamilyMemberModal({
 
                                 <BirthDate date={date} setDate={setDate}/>
 
-                                <DeathDate date={date_} setDate={setDate_}/>
+                                {tillOurTime ? (
+                                    <TouchableOpacity
+                                        onPress={() => Alert.alert('Если хотите изменить: нажмите и удерживайте')}
+                                        onLongPress={() => setTillOurTime(false)}>
+                                        <Text>По наше время</Text>
+                                    </TouchableOpacity>
 
+                                ) : (
+                                    <DeathDate date={date_} setDate={setDate_}/>
+                                )}
                             </View>
 
                             <View>

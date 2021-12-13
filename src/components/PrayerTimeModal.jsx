@@ -17,29 +17,26 @@ export default function PrayerTimeModal({ modalVisible, setModalVisible, prayTim
                 <View style={styles.modal}>
                    <View style={{marginVertical: normalize(9)}}>
                        <View style={styles.timeContainer}>
-                            <Text style={styles.name}>Фаджр</Text>
+                            <Text style={styles.name}>Фаджр  </Text>
                             <SwitchButton id='1' time={prayTime ? prayTime.Fajr: ''}/>
                             <Text style={styles.time}>
-                                {prayTime ? prayTime.Fajr.substring(0,2) <= 12 ? prayTime.Fajr.substring(0,5) + ' ДП'
-                                    : '0' + prayTime.Fajr.substring(0,2) - 12 + prayTime.Fajr.substring(2,5) + ' ПП' : null}
+                                {prayTime ? prayTime.Fajr.substring(0,2) + prayTime.Fajr.substring(2,5) : null}
                             </Text>
                         </View>
 
                         <View style={styles.timeContainer}>
-                            <Text style={styles.name}>Восход</Text>
+                            <Text style={styles.name}>Восход  </Text>
                             <SwitchButton id='2' time={prayTime ? prayTime.Sunrise : ''}/>
                             <Text style={styles.time}>
-                                {prayTime ? prayTime.Sunrise.substring(0,2) <= 12 ? prayTime.Sunrise.substring(0,5) + ' ДП'
-                                    : '0' + prayTime.Sunrise.substring(0,2) - 12 + prayTime.Sunrise.substring(2,5) + ' ПП' : null}
+                                {prayTime ? prayTime.Sunrise.substring(0,2) + prayTime.Sunrise.substring(2,5) : null}
                             </Text>
                         </View>
 
                         <View style={styles.timeContainer}>
-                            <Text style={styles.name}>Зухр     </Text>
+                            <Text style={styles.name}>Зухр       </Text>
                                 <SwitchButton id='3' time={prayTime ? prayTime.Dhuhr : ''}/>
                             <Text style={styles.time}>
-                                {prayTime ? prayTime.Dhuhr.substring(0,2) <= 12 ? prayTime.Dhuhr.substring(0,5) + ' ДП'
-                                    : '0' + prayTime.Dhuhr.substring(0,2) - 12 + prayTime.Dhuhr.substring(2,5) + ' ПП' : null}
+                                {prayTime ? prayTime.Dhuhr.substring(0,2) + prayTime.Dhuhr.substring(2,5) : null}
                             </Text>
                         </View>
 
@@ -47,8 +44,7 @@ export default function PrayerTimeModal({ modalVisible, setModalVisible, prayTim
                             <Text style={styles.name}>Аср       </Text>
                                 <SwitchButton id='4' time={ prayTime ? prayTime.Asr : ''}/>
                             <Text style={styles.time}>
-                                {prayTime ? prayTime.Asr.substring(0,2) <= 12 ? prayTime.Asr.substring(0,5) + ' ДП'
-                                    : '0' + prayTime.Asr.substring(0,2) - 12 + prayTime.Asr.substring(2,5) + ' ПП' : null}
+                                {prayTime ? prayTime.Asr.substring(0,2) + prayTime.Asr.substring(2,5) : null}
                             </Text>
                         </View>
 
@@ -56,8 +52,7 @@ export default function PrayerTimeModal({ modalVisible, setModalVisible, prayTim
                             <Text style={styles.name}>Магриб</Text>
                             <SwitchButton id='5' time={prayTime ? prayTime.Maghrib : ''}/>
                             <Text style={styles.time}>
-                                {prayTime ? prayTime.Maghrib.substring(0,2) <= 12 ? prayTime.Maghrib.substring(0,5) + ' ДП'
-                                    : '0' + prayTime.Maghrib.substring(0,2) - 12 + prayTime.Maghrib.substring(2,5) + ' ПП' : null}
+                                 {prayTime ? prayTime.Maghrib.substring(0,2) + prayTime.Maghrib.substring(2,5) : null}
                             </Text>
                         </View>
 
@@ -65,8 +60,7 @@ export default function PrayerTimeModal({ modalVisible, setModalVisible, prayTim
                             <Text style={styles.name}>Иша     </Text>
                             <SwitchButton id='6' time={prayTime ? prayTime.Isha : ''}/>
                             <Text style={styles.time}>
-                                {prayTime ? prayTime.Isha.substring(0,2) <= 12 ? prayTime.Isha.substring(0,5) + ' ДП'
-                                    : '0' + prayTime.Isha.substring(0,2) - 12 + prayTime.Isha.substring(2,5) + ' ПП' : null}
+                                {prayTime ? prayTime.Isha.substring(0,2) + prayTime.Isha.substring(2,5) : null}
                             </Text>
                         </View>
 

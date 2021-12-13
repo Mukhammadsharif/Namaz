@@ -8,12 +8,15 @@ import TreeSwitch from "../components/TreeSwitch";
 import ReligiousSwitch from "../components/ReligiousSwitch";
 import { Picker } from '@react-native-picker/picker'
 import { MusicContext } from "../utils/context";
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import LogOutModal from "../components/LogOutModal";
+import chevronLeft from "../assets/icons/chevronLeft.png";
 
 export default function Profile({ religious, setReligious }) {
     const navigation = useNavigation()
     const { setMusic, music } = useContext(MusicContext)
     const [selectedValue, setSelectedValue] = useState('first')
+    const [modal, setModal] = useState(false)
 
     const getSong = async () => {
         let sound = await AsyncStorage.getItem('music')
@@ -34,6 +37,11 @@ export default function Profile({ religious, setReligious }) {
     return (
         <View style={{ flex: 1}}>
             <View style={styles.chatHeaderContainer}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <Image source={chevronLeft} style={styles.chevronLeft}/>
+                    <Text style={styles.chats}>Чаты</Text>
+                 </TouchableOpacity>
+
                 <Text style={styles.chatHeaderText}>Профиль</Text>
             </View>
 
@@ -75,12 +83,15 @@ export default function Profile({ religious, setReligious }) {
 
             <TouchableOpacity
                 onPress={() => {
-                    logOut()
-                    navigation.navigate('Login')
+                    setModal(true)
                 }}
                 style={styles.exitContainer}>
-                <Text style={styles.exitText}>Выход</Text>
+                <Text style={styles.exitText}>Выход из системы</Text>
             </TouchableOpacity>
+
+            <LogOutModal
+                modalVisible={modal}
+                setModalVisible={setModal}/>
         </View>
     )
 }
@@ -90,8 +101,8 @@ const styles = StyleSheet.create({
         width: normalize(380),
         height: normalize(60),
         backgroundColor: '#344181',
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'space-between',
         flexDirection: 'row',
         flex: 2
     },
@@ -100,6 +111,8 @@ const styles = StyleSheet.create({
         fontSize: normalize(20),
         lineHeight: normalize(21),
         color: '#FFFFFF',
+        flex: 2,
+        marginLeft: 20
     },
     content: {
         flex: 21,
@@ -135,5 +148,22 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: normalize(15)
+    },
+    chevronLeft: {
+        width: normalize(11),
+        height: normalize(18)
+    },
+    chats: {
+        fontWeight: 'bold',
+        fontSize: normalize(16),
+        lineHeight: normalize(18),
+        color: '#FFFFFF',
+        marginLeft: 8,
+    },
+    backButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: 20,
+        flex: 1
     }
 })

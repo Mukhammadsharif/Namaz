@@ -1,9 +1,15 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
 import { theme } from "./theme";
 import {normalize} from "../utils/normalize";
 
-export default function Input({ errorText, description, ...props}) {
+export default function Input({ errorText,
+                                  description,
+                                  button: Icon,
+                                  buttonFunc = () => { },
+                                  colorIcon,
+                                  iconButton,
+                                  ...props}) {
     return (
         <View style={styles.container}>
             <TextInput
@@ -17,6 +23,12 @@ export default function Input({ errorText, description, ...props}) {
                 <Text style={styles.description}>{description}</Text>
             ): null}
             {errorText? <Text style={styles.error}>{errorText}</Text>: null}
+
+            {Icon && (
+                <TouchableOpacity onPress={buttonFunc} style={{ ...styles.button, ...iconButton }}>
+                    <Icon color={colorIcon} />
+                </TouchableOpacity>
+            )}
         </View>
     )
 }
@@ -46,5 +58,10 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         paddingHorizontal: normalize(20),
         borderWidth: 1
+    },
+    button: {
+        position: 'absolute',
+        right: 25,
+        top: 20,
     },
 })

@@ -15,7 +15,6 @@ import firebase from '../../config'
 export default function Namaz(){
     const [currentHour, setCurrentHour] = useState(null)
     const [currentMinute, setCurrentMinute] = useState(null)
-    const [currentAm, setCurrentAm] = useState(null)
     const [currentDay, setCurrentDay] = useState(null)
     const [currentCity, setCurrentCity] = useState(null)
     const [currentCountry, setCurrentCountry] = useState(null)
@@ -37,25 +36,8 @@ export default function Namaz(){
         if (minutes < 10) {
             minutes = '0' + minutes;
         }
-
-        if (seconds < 10) {
-            seconds = '0' + seconds;
-        }
-
-        if (hour > 12) {
-            hour = hour - 12;
-        }
-
-        if (hour === 0) {
-            hour = 12;
-        }
-
-        if (new Date().getHours() < 12) {
-            am_pm = 'am';
-        }
         setCurrentHour(hour)
         setCurrentMinute(minutes)
-        setCurrentAm(am_pm)
         days.map((item, key) => {
             if(key===new Date().getDay()){
                 setCurrentDay(item.toUpperCase())
@@ -143,23 +125,24 @@ export default function Namaz(){
                     <Text style={styles.cityName}>{currentCity} {' ('+currentCountry+')'}</Text>
                 </View>
 
-                <View style={styles.hourContainer}>
-                    <Text style={styles.hour}>
-                        {currentHour < 10 ? '0' + currentHour : currentHour }
-                    </Text>
-                </View>
+                <View style={{flexDirection: 'column', justifyContent:'center', alignItems: 'center'}}>
+                    <View style={styles.hourContainer}>
+                        <Text style={styles.hour}>
+                            {currentHour < 10 ? '0' + currentHour : currentHour }
+                        </Text>
+                    </View>
 
-                <View style={styles.minuteContainer}>
-                    <Text style={styles.minute}>{currentMinute}</Text>
-                    <Text style={styles.am}>{currentAm === 'am' ? 'ДП' : 'ПП'}</Text>
+                    <View style={styles.minuteContainer}>
+                        <Text style={styles.minute}>{currentMinute}</Text>
+                        {/*<Text style={styles.am}>{currentAm === 'am' ? 'ДП' : 'ПП'}</Text>*/}
+                    </View>
                 </View>
 
                 <View style={styles.container}>
                     <View style={styles.sunrise}>
                         <Text style={styles.zukhr}>Зухр</Text>
                         <Text style={styles.comesAfter}>
-                            {prayTime ? prayTime.Dhuhr.substring(0,2) <= 12 ? prayTime.Dhuhr.substring(0,5) + ' ДП'
-                                    : '0' + prayTime.Dhuhr.substring(0,2) - 12 + prayTime.Dhuhr.substring(2,5) + ' ПП' : null}
+                            {prayTime ? prayTime.Dhuhr.substring(0,2) + prayTime.Dhuhr.substring(2,5) : null}
                         </Text>
                         <View style={styles.comingContainer}>
                             <Text style={styles.comingText}>наступает</Text>
@@ -169,8 +152,7 @@ export default function Namaz(){
                     <View style={styles.asrContainer}>
                         <Text style={styles.zukhr}>Аср</Text>
                         <Text style={styles.time}>
-                            {prayTime ? prayTime.Asr.substring(0,2) <= 12 ? prayTime.Asr.substring(0,5) + ' ДП'
-                                    : '0' + prayTime.Asr.substring(0,2) - 12 + prayTime.Asr.substring(2,5) + ' ПП' : null}
+                            {prayTime ? prayTime.Asr.substring(0,2) + prayTime.Asr.substring(2,5) : null}
                         </Text>
                     </View>
 
@@ -228,7 +210,7 @@ const styles = StyleSheet.create({
         color: '#494949',
         lineHeight: normalize(18),
         fontWeight: '600',
-        marginLeft: normalize(150)
+        marginLeft: normalize(182)
     },
     comingText:{
         fontSize: normalize(12),
@@ -247,11 +229,11 @@ const styles = StyleSheet.create({
         marginTop: normalize(10),
     },
     time:{
-         fontSize: normalize(15),
+        fontSize: normalize(15),
         color: '#494949',
         lineHeight: normalize(18),
         fontWeight: '600',
-        marginLeft: normalize(260)
+        marginLeft: normalize(280)
     },
     showAll:{
         width: normalize(350),
@@ -303,7 +285,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: normalize(35)
     },
     gpsIcon: {
         width: normalize(13),

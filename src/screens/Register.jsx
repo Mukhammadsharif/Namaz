@@ -10,6 +10,9 @@ import phoneNumberValidator from "../helpers/phoneNumberValidator";
 import { signUpUser } from "../../api/auth-api";
 import TextInput from "../components/TextInput";
 import firebase from '../../config'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
+import {theme} from "../components/theme";
 
 
 export default function Register(){
@@ -18,6 +21,8 @@ export default function Register(){
     const [password, setPassword] = useState({value: '', error: ''})
     const [password2, setPassword2] = useState({value: '', error: ''})
     const [phoneNumber, setPhoneNumber] = useState({value: '', error: ''})
+    const [passwordEye, setPasswordEye] = useState(false)
+    const [retryPasswordEye, setRetryPasswordEye] = useState(false)
     const [loading, setLoading] = useState(false)
     const navigation = useNavigation()
 
@@ -107,14 +112,18 @@ export default function Register(){
                               onChangeText={(text) => setPassword({value:text, error: ''})}
                               value={password.value}
                               error={password.error}
-                              secureTextEntry
+                              secureTextEntry={!passwordEye}
                               errorText={password.error}
+                              button={() => <FontAwesomeIcon icon={faEye} color={theme.colors.tint} size={24}/>}
+                              buttonFunc={() => setPasswordEye(!passwordEye)}
                           />
                            <TextInput
                               placeholder='Повторить пароль'
                               placeholderTextColor='#FFFFFF'
                               onChangeText={(text) => setPassword2({value:text, error: ''})}
-                              secureTextEntry
+                              secureTextEntry={!retryPasswordEye}
+                              button={() => <FontAwesomeIcon icon={faEye} color={theme.colors.tint} size={24}/>}
+                              buttonFunc={() => setRetryPasswordEye(!retryPasswordEye)}
                           />
 
                           <TouchableOpacity

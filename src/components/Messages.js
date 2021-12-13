@@ -1,6 +1,6 @@
 import firebase from '../../config'
 
-export const SendMessage = async (currentUid, guestUid, message) => {
+export const SendMessage = async (currentUid, guestUid, message, id) => {
     try {
         return await firebase
             .database()
@@ -11,7 +11,8 @@ export const SendMessage = async (currentUid, guestUid, message) => {
                 currentUid: currentUid,
                 guestUid: guestUid,
                 message: message,
-                created_at: new Date().toLocaleTimeString()
+                created_at: new Date().toLocaleTimeString(),
+                id: id,
             });
     } catch (error) {
         return error

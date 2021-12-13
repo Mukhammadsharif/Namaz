@@ -10,11 +10,15 @@ import passwordValidator from "../helpers/passwordValidator";
 import { loginUser, googleSignIn } from "../../api/auth-api";
 import firebase from "firebase";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
+import {faEye} from "@fortawesome/free-solid-svg-icons";
+import {theme} from "../components/theme";
 
 export default function Login({ navigation }){
     const [email, setEmail] = useState({value: '', error: ''})
     const [password, setPassword] = useState({value: '', error: ''})
     const [loading, setLoading] = useState(false)
+    const [passwordEye, setPasswordEye] = useState(false)
     const [data, setData] = useState(null)
 
     const onLoginPressed = async () => {
@@ -84,8 +88,10 @@ export default function Login({ navigation }){
                           onChangeText={(text) => setPassword({value:text, error: ''})}
                           value={password.value}
                           error={password.error}
-                          //
                           errorText={password.error}
+                          secureTextEntry={!passwordEye}
+                          button={() => <FontAwesomeIcon icon={faEye} color={theme.colors.tint} size={24}/>}
+                          buttonFunc={() => setPasswordEye(!passwordEye)}
                       />
                       <TouchableOpacity
                           style={styles.button}

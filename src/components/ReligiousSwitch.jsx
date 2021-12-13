@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { View, Switch } from "react-native"
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function ReligiousSwitch({ religious, setReligious }){
     const [isEnabled, setIsEnabled] = useState(null);

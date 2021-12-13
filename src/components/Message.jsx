@@ -1,31 +1,47 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import {normalize} from "../utils/normalize";
 import firebase from '../../config'
+import downloadAudio from "../sounds/downloadAudio";
+import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
+import {faPlay, faSpinner} from "@fortawesome/free-solid-svg-icons";
 
 export default function Message({ item }) {
 
     return (
             <>
             { item.val().currentUid !== firebase.auth().currentUser.uid ? (
-                <View style={styles.messageContainer}>
+                <TouchableOpacity
+                    style={styles.messageContainer}
+                    onPress={() => item.val().message === 'audio' ? downloadAudio(item.val().id) : null}>
                     <View style={styles.message}>
-                        <Text style={styles.messageText}>{item.val().message}</Text>
+                        {item.val().message !== 'audio' ? (
+                            <Text style={styles.messageText}>{item.val().message}</Text>
+                        ) : (
+                            <FontAwesomeIcon icon={faPlay}/>
+                        )}
                         <Text style={styles.messageTime}>{item.val().created_at ? item.val().created_at : "10:35"}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
                 ) : (
-                    <View style={styles.ownMessageContainer}>
+                    <TouchableOpacity
+                        style={styles.ownMessageContainer}
+                        onPress={() => item.val().message === 'audio' ? downloadAudio(item.val().id) : null}>
                         <View style={styles.message}>
-                            <Text style={styles.messageText}>{item.val().message}</Text>
+                            {item.val().message !== 'audio' ? (
+                                <Text style={styles.messageText}>{item.val().message}</Text>
+                            ) : (
+                                <FontAwesomeIcon icon={faPlay}/>
+                            )}
                             <Text style={styles.messageTime}>{item.val().created_at ? item.val().created_at : "10:35"}</Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 )}
             </>
 
     )
 }
+
 
 const styles = StyleSheet.create({
     messageContainer: {
