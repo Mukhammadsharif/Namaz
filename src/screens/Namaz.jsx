@@ -9,7 +9,8 @@ import Down from '../assets/images/down.png'
 import Dusk from '../assets/images/dusk.png'
 import Night from '../assets/images/night.png'
 import Gps from '../assets/icons/gps.png'
-import firebase from '../../config'
+import { firebase } from '@react-native-firebase/auth'
+import { firebase as Firebase } from '../../config'
 
 
 export default function Namaz(){
@@ -23,9 +24,7 @@ export default function Namaz(){
     const [latitude, setLatitude] = useState(null)
     const [longitude, setLongitude] = useState(null)
     const [prayTime, setPrayTime] = useState(null)
-
     const uid = firebase.auth().currentUser.uid
-
 
     const getCurrentTime = () => {
         let hour = new Date().getHours()
@@ -86,10 +85,10 @@ export default function Namaz(){
 
     AppState.addEventListener('change', state => {
           if (state === 'active') {
-            firebase.database().ref('users/' + uid)
+            Firebase.database().ref('users/' + uid)
             .update({status: true})
           } else if (state === 'background') {
-              firebase.database().ref('users/' + uid)
+              irebase.database().ref('users/' + uid)
                 .update({status: false})
           }
         });

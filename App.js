@@ -42,8 +42,6 @@ LogBox.ignoreLogs(['Warning: AsyncStorage has been extracted from react-native c
 'talled and imported from \'@react-native-community/async-storage\' instead of \'react-native\'. See https://github.com/react-native-community/async-storage'])
 
 
-
-
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -74,7 +72,7 @@ export default function Navigation(){
     }, [])
 
     if(!firebase.apps.length){
-    firebase.initializeApp(firebaseConfig)
+        firebase.initializeApp(firebaseConfig)
     }
 
     let initial = null

@@ -1,5 +1,5 @@
 import firebase from "firebase";
-// import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyCtn9RiKjT50WngE2COgoc2LI7tDLJdmKI",
@@ -15,6 +15,6 @@ export const ANDROID_GOOGLE_CLIENT_ID = '937031194018-eq2mc4kfov77j317mg7f8eagfa
 export const IOS_GOOGLE_CLIENT_ID = '563795209906-9rfc8bjcsniasbjqrupqa0qp5d1bqevs.apps.googleusercontent.com'
 
 
-// GoogleSignin.configure({
-//   webClientId: '528049907815-m2n3r6q10ht8loopv0opurqc6cirt40v.apps.googleusercontent.com',
-// });
+GoogleSignin.configure({
+  webClientId: '528049907815-m2n3r6q10ht8loopv0opurqc6cirt40v.apps.googleusercontent.com',
+});

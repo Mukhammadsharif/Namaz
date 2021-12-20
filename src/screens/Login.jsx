@@ -59,6 +59,9 @@ export default function Login({ navigation }){
                     phone: data.user.phoneNumber,
                     family_id: data.user.uid,
                     image: data.user.photoURL,
+                    status: false,
+                    treeVisibility: false,
+                    visibility: false,
                 })
             }
             navigation.navigate('TabScreen')
@@ -111,7 +114,7 @@ export default function Login({ navigation }){
                          <Image source={Google} style={styles.logo}/>
                      </TouchableOpacity>
 
-                     {Platform === 'Android' ? (
+                     {Platform.OS === 'Android' ? (
                          <TouchableOpacity
                               style={styles.registerWithApple}
                               onPress={() => console.log('Pressed')}>

@@ -53,7 +53,10 @@ export default function Register(){
                  email: email.value,
                  phone: phoneNumber.value,
                  family_id: firebase.auth().currentUser.uid,
-                 image: null
+                 image: null,
+                 status: false,
+                 treeVisibility: false,
+                 visibility: false,
              }).then(r => console.log(r))
 
         if (response.error){
