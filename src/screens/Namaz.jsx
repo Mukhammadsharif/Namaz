@@ -23,7 +23,7 @@ export default function Namaz(){
     const [latitude, setLatitude] = useState(null)
     const [longitude, setLongitude] = useState(null)
     const [prayTime, setPrayTime] = useState(null)
-    const uid = firebase.auth().currentUser.uid
+
 
     const getCurrentTime = () => {
         let hour = new Date().getHours()
@@ -83,10 +83,11 @@ export default function Namaz(){
 
 
     AppState.addEventListener('change', state => {
-          if (state === 'active') {
+          const uid = firebase.auth().currentUser.uid
+          if (state === 'active' && uid) {
             firebase.database().ref('users/' + uid)
             .update({status: true})
-          } else if (state === 'background') {
+          } else if (state === 'background' && uid) {
               firebase.database().ref('users/' + uid)
                 .update({status: false})
           }
