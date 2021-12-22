@@ -9,8 +9,7 @@ import Down from '../assets/images/down.png'
 import Dusk from '../assets/images/dusk.png'
 import Night from '../assets/images/night.png'
 import Gps from '../assets/icons/gps.png'
-import { firebase } from '@react-native-firebase/auth'
-import { firebase as Firebase } from '../../config'
+import firebase from '../../config'
 
 
 export default function Namaz(){
@@ -85,10 +84,10 @@ export default function Namaz(){
 
     AppState.addEventListener('change', state => {
           if (state === 'active') {
-            Firebase.database().ref('users/' + uid)
+            firebase.database().ref('users/' + uid)
             .update({status: true})
           } else if (state === 'background') {
-              irebase.database().ref('users/' + uid)
+              firebase.database().ref('users/' + uid)
                 .update({status: false})
           }
         });
@@ -124,12 +123,14 @@ export default function Namaz(){
                     <Text style={styles.cityName}>{currentCity} {' ('+currentCountry+')'}</Text>
                 </View>
 
-                <View style={{flexDirection: 'column', justifyContent:'center', alignItems: 'center'}}>
+                <View style={{flexDirection: 'row', justifyContent:'center', alignItems: 'center', marginTop: 150}}>
                     <View style={styles.hourContainer}>
                         <Text style={styles.hour}>
                             {currentHour < 10 ? '0' + currentHour : currentHour }
                         </Text>
                     </View>
+
+                    <Text style={[styles.minute, { marginBottom: 10}]}>:</Text>
 
                     <View style={styles.minuteContainer}>
                         <Text style={styles.minute}>{currentMinute}</Text>
@@ -278,7 +279,6 @@ const styles = StyleSheet.create({
     hourContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: normalize(150)
     },
     minuteContainer: {
         flexDirection: 'row',

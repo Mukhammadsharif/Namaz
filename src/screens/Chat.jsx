@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {View, StyleSheet, Text, ScrollView, TouchableOpacity, Image} from 'react-native'
+import {View, StyleSheet, Text, ScrollView, TouchableOpacity, Image, Alert} from 'react-native'
 import AddCompanionModal from "../components/AddCompanionModal";
 import PlusIcon from '../assets/icons/+.png'
 import {normalize} from "../utils/normalize"
@@ -9,14 +9,13 @@ import firebase from '../../config'
 export default function Chat({ navigation }){
     const [modalVisible, setModalVisible] = useState(false)
     const [phone, setPhone] = useState('')
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [user, setUser] = useState(null)
     const [company, setCompany] = useState([])
-    const [companion, setCompanion] = useState(null)
+    const [companion, setCompanion] = useState([])
     const [companionsList, setCompanionsList] = useState([])
     const [chats, setChats] = useState([])
     const [chatsList, setChatsList] = useState([])
-    let companions = []
     let list = []
     let chatList = []
 
@@ -25,31 +24,49 @@ export default function Chat({ navigation }){
                 .orderByChild('phone')
                 .equalTo(phone)
                 .on('value', snapshot => {
-                       setUser(snapshot)
+                       if(snapshot.val() === null) {
+                           Alert.alert('Пользователь не существует')
+                       } else {
+                           setUser(snapshot)
+                       }
                 })
     }
 
     useEffect(() => {
         if (user) {
            user.forEach(item => {
-               companions.push(item)
+               setCompany([...company, item])
+               console.log(item, company)
            })
-            setCompany(companions)
-            setCompanionList()
         }
         setPhone('')
     }, [user])
 
+    useEffect(() => {
+        company.length > 0 ? setCompanionList() : null
+    }, [company])
+
+    let newUser
+    let oldUser = []
 
     const setCompanionList = () => {
         const uid = firebase.auth().currentUser.uid
-             if (company) {
-                    company.map(item => {
-                        firebase.database().ref('users/' + uid).child('companion').push({
-                        companion: item.key
-                    })
+
+        companionsList.map(item => oldUser.push(item.val().companion))
+        company.map(item => newUser = item.key)
+
+        if (!oldUser.includes(newUser)) {
+            console.log(oldUser, newUser)
+            company.map(item => {
+                firebase.database().ref('users/' + uid).child('companion').push({
+                    companion: newUser
                 })
-             }
+            })
+            setCompany([])
+            setUser(null)
+        } else {
+            Alert.alert('Пользователь уже добавлен')
+        }
     }
 
     const getCompanionListItems = () => {
@@ -98,7 +115,6 @@ export default function Chat({ navigation }){
         setChats(set)
     }
 
-
     const setList = () => {
         if(chats) {
             chats.forEach(item => {
@@ -119,7 +135,9 @@ export default function Chat({ navigation }){
     }, [])
 
     useEffect(() => {
-       getCompanion()
+       loading ? getCompanion() : null
+
+        return () => setLoading(false)
     }, [loading])
 
 

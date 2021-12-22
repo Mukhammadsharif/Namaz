@@ -33,7 +33,7 @@ export default function AddCompanionModal({ modalVisible, setModalVisible,
                         onPress={() => {
                             setPhone(phone)
                             setModalVisible(false)
-                            setLoading(!loading)
+                            setLoading(true)
                         }}
                         color='#344181'
                         />
