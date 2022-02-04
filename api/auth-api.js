@@ -14,8 +14,7 @@ export async function googleSignIn() {
 
 export async function signUpUser({ name, email, password }) {
     try {
-        const { user } = await firebase
-            .auth()
+        const { user } = await auth()
             .createUserWithEmailAndPassword(email, password)
         await firebase.auth().currentUser.updateProfile({displayName: name})
         return { user }
@@ -27,8 +26,7 @@ export async function signUpUser({ name, email, password }) {
 
 export async function loginUser({ email, password }) {
     try {
-        const { user } = await firebase
-            .auth()
+        const { user } = await auth()
             .signInWithEmailAndPassword(email, password)
         return { user }
     } catch (error) {
@@ -41,7 +39,7 @@ export async function loginUser({ email, password }) {
 
 export async function resetPassword({ email }) {
     try {
-        await firebase.auth().sendPasswordResetEmail(email)
+        await auth().sendPasswordResetEmail(email)
         return {}
     } catch (error) {
         return {
@@ -51,5 +49,5 @@ export async function resetPassword({ email }) {
 }
 
 export function logOut(){
-    firebase.auth().signOut().then(r => {})
+    auth().signOut().then(r => {})
 }

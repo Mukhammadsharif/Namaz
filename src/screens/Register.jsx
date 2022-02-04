@@ -9,7 +9,7 @@ import passwordValidator from "../helpers/passwordValidator";
 import phoneNumberValidator from "../helpers/phoneNumberValidator";
 import { signUpUser } from "../../api/auth-api";
 import TextInput from "../components/TextInput";
-import firebase from '../../config'
+import firebase from 'firebase/compat'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 import {theme} from "../components/theme";

@@ -4,7 +4,7 @@ import chevronLeft from "../assets/icons/chevronLeft.png";
 import userImage from "../assets/images/companion.png";
 import { useNavigation } from '@react-navigation/native'
 import {normalize} from "../utils/normalize";
-import firebase from "../../config";
+import firebase from "firebase/compat";
 import {Card, Paragraph} from "react-native-paper";
 
 export default function UserFamilyScreen({ route }) {

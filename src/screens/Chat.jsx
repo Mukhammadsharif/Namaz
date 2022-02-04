@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import {View, StyleSheet, Text, ScrollView, TouchableOpacity, Image} from 'react-native'
+import { View, StyleSheet, Text, ScrollView, TouchableOpacity, Image, ActivityIndicator, Alert } from 'react-native'
 import AddCompanionModal from "../components/AddCompanionModal";
 import PlusIcon from '../assets/icons/+.png'
 import {normalize} from "../utils/normalize"
 import Companion from "../components/Companion"
-import firebase from '../../config'
+import firebase from "firebase/compat";
+
 
 export default function Chat({ navigation }){
     const [modalVisible, setModalVisible] = useState(false)
@@ -16,6 +17,7 @@ export default function Chat({ navigation }){
     const [companionsList, setCompanionsList] = useState([])
     const [chats, setChats] = useState([])
     const [chatsList, setChatsList] = useState([])
+    const [userLoading, setUserLoading] = useState(false)
     let companions = []
     let list = []
     let chatList = []
@@ -25,20 +27,36 @@ export default function Chat({ navigation }){
                 .orderByChild('phone')
                 .equalTo(phone)
                 .on('value', snapshot => {
-                       setUser(snapshot)
+                       if(snapshot.val() === null) {
+                           Alert.alert('Пользователь не найден')
+                       } else {
+                           setUser(snapshot)
+                           setUserLoading(!userLoading)
+                           if(companionsList.length < 1) {
+                               setUser(snapshot)
+                               Alert.alert('Пользователь добавьляется...')
+                           } else if(companionsList.length > 0) {
+                               companionsList.map(item => {
+                                   console.log(item)
+                               })
+                           }
+                       }
                 })
     }
+
 
     useEffect(() => {
         if (user) {
            user.forEach(item => {
                companions.push(item)
+               setCompany(companions)
            })
-            setCompany(companions)
             setCompanionList()
         }
         setPhone('')
-    }, [user])
+    }, [userLoading])
+
+    console.log(user, companions)
 
 
     const setCompanionList = () => {
@@ -135,6 +153,8 @@ export default function Chat({ navigation }){
                      <Image source={PlusIcon} style={styles.plusIcon}/>
                 </TouchableOpacity>
             </View>
+
+            {!chatsList.length ? <ActivityIndicator size="large" color="#0000ff"/> : null}
 
             <ScrollView>
                 {chatsList ? chatsList.map(item => (

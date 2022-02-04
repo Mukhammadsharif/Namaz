@@ -8,7 +8,7 @@ import Google from '../assets/icons/google.png'
 import emailValidator from "../helpers/emailValidator";
 import passwordValidator from "../helpers/passwordValidator";
 import { loginUser, googleSignIn } from "../../api/auth-api";
-import firebase from "firebase";
+import firebase from "firebase/compat";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";

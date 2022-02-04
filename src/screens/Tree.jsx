@@ -7,7 +7,7 @@ import EditIcon from '../assets/icons/icons8-edit-480.png'
 import DeleteIcon from '../assets/icons/icons8-delete-512.png'
 import ChatIcon from '../assets/icons/chat-Icon.png'
 import { useNavigation } from "@react-navigation/native";
-import firebase from '../../config'
+import firebase from 'firebase/compat'
 import AddFamilyMemberModal from "../components/AddFamilyMemberModal";
 
 export default function Tree() {

@@ -88,7 +88,7 @@ export default function Namaz(){
             Firebase.database().ref('users/' + uid)
             .update({status: true})
           } else if (state === 'background') {
-              irebase.database().ref('users/' + uid)
+              Firebase.database().ref('users/' + uid)
                 .update({status: false})
           }
         });

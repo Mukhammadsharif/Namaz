@@ -8,7 +8,7 @@ import filesIcon from '../assets/icons/files.png'
 import voiceIcon from '../assets/icons/voice-message-microphone-button.png'
 import sendMessageIcon from '../assets/icons/send_message.png'
 import { SendMessage, ReceiveMessage} from "../components/Messages";
-import firebase from '../../config'
+import firebase from 'firebase/compat'
 import AudioRecorderPlayer from 'react-native-audio-recorder-player';
 import {
     AudioEncoderAndroidType,
