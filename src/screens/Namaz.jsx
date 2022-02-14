@@ -18,7 +18,7 @@ export default function Namaz(){
     const [currentMinute, setCurrentMinute] = useState(null)
     const [currentDay, setCurrentDay] = useState(null)
     const [currentCity, setCurrentCity] = useState(null)
-    const [currentCountry, setCurrentCountry] = useState(null)
+    const [currentCountry, setCurrentCountry] = useState('')
     const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     const [modalVisible, setModalVisible] = useState(false)
     const [latitude, setLatitude] = useState(null)
@@ -124,7 +124,7 @@ export default function Namaz(){
                     <Text style={styles.cityName}>{currentCity} {' ('+currentCountry+')'}</Text>
                 </View>
 
-                <View style={{flexDirection: 'column', justifyContent:'center', alignItems: 'center'}}>
+                <View style={{flexDirection: 'row', justifyContent:'center', alignItems: 'center'}}>
                     <View style={styles.hourContainer}>
                         <Text style={styles.hour}>
                             {currentHour < 10 ? '0' + currentHour : currentHour }
@@ -132,8 +132,11 @@ export default function Namaz(){
                     </View>
 
                     <View style={styles.minuteContainer}>
+                        <Text style={styles.minute}>:</Text>
+                    </View>
+
+                    <View style={styles.minuteContainer}>
                         <Text style={styles.minute}>{currentMinute}</Text>
-                        {/*<Text style={styles.am}>{currentAm === 'am' ? 'ДП' : 'ПП'}</Text>*/}
                     </View>
                 </View>
 
@@ -209,7 +212,7 @@ const styles = StyleSheet.create({
         color: '#494949',
         lineHeight: normalize(18),
         fontWeight: '600',
-        marginLeft: normalize(182)
+        marginLeft: normalize(170)
     },
     comingText:{
         fontSize: normalize(12),
@@ -232,7 +235,7 @@ const styles = StyleSheet.create({
         color: '#494949',
         lineHeight: normalize(18),
         fontWeight: '600',
-        marginLeft: normalize(280)
+        marginLeft: normalize(270)
     },
     showAll:{
         width: normalize(350),
@@ -284,6 +287,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: normalize(150)
     },
     gpsIcon: {
         width: normalize(13),

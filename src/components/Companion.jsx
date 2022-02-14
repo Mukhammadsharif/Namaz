@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
     },
     image: {
         width: normalize(70),
-        height: normalize(70)
+        height: normalize(70),
+        borderRadius: 50,
     },
     name: {
         color: '#494949',

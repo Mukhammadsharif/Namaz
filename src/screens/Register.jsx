@@ -14,9 +14,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 import {theme} from "../components/theme";
 import { app } from "../../config";
+import ReligiousSwitch from "../components/ReligiousSwitch";
 
 
-export default function Register(){
+export default function Register({ religious, setReligious }){
     const [name, setName] = useState({value: '', error: ''})
     const [email, setEmail] = useState({value: '', error: ''})
     const [password, setPassword] = useState({value: '', error: ''})
@@ -130,6 +131,10 @@ export default function Register(){
                               buttonFunc={() => setRetryPasswordEye(!retryPasswordEye)}
                           />
 
+                          <View style={styles.switchContainer}>
+                              <Text style={styles.switchText}>Вы не мусульманин?</Text>
+                              <ReligiousSwitch religious={religious} setReligious={setReligious}/>
+                          </View>
                           <TouchableOpacity
                               style={styles.button}
                               onPress={onSignupPressed}>
@@ -158,7 +163,7 @@ const styles = StyleSheet.create({
     },
     image: {
        width: normalize(380),
-       height: normalize(740),
+       height: '100%',
     },
     input: {
         backgroundColor: 'rgba(0,0,0,0)',
@@ -220,7 +225,8 @@ const styles = StyleSheet.create({
         fontSize: normalize(15),
         lineHeight: normalize(18),
         fontWeight: '500',
-        textDecorationLine: 'underline'
+        textDecorationLine: 'underline',
+        paddingBottom: 60
     },
     accountContainer: {
         justifyContent: 'center',
@@ -241,4 +247,16 @@ const styles = StyleSheet.create({
         borderColor: '#F40D0D',
         paddingTop: 7,
     },
+    switchContainer: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+        paddingVertical: 15
+    },
+    switchText: {
+        fontSize: normalize(15),
+        lineHeight: normalize(18),
+        color: '#FFFFFF',
+    }
 })

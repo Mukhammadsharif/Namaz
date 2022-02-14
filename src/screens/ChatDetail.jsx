@@ -252,7 +252,8 @@ const styles = StyleSheet.create({
     },
     userImage: {
         width: normalize(45),
-        height: normalize(45)
+        height: normalize(45),
+        borderRadius: 50,
     },
     chatsContainer: {
         flexDirection: 'row',

@@ -45,5 +45,4 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         marginTop: normalize(5)
     }
-
 })

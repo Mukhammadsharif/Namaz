@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     },
     image: {
        width: normalize(380),
-       height: normalize(730),
+       height: '100%',
     },
     input: {
         backgroundColor: 'rgba(0,0,0,0)',

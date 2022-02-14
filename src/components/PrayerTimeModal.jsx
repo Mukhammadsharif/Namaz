@@ -17,7 +17,7 @@ export default function PrayerTimeModal({ modalVisible, setModalVisible, prayTim
                 <View style={styles.modal}>
                    <View style={{marginVertical: normalize(9)}}>
                        <View style={styles.timeContainer}>
-                            <Text style={styles.name}>Фаджр  </Text>
+                            <Text style={styles.name}>Фаджр</Text>
                             <SwitchButton id='1' time={prayTime ? prayTime.Fajr: ''}/>
                             <Text style={styles.time}>
                                 {prayTime ? prayTime.Fajr.substring(0,2) + prayTime.Fajr.substring(2,5) : null}
@@ -25,7 +25,7 @@ export default function PrayerTimeModal({ modalVisible, setModalVisible, prayTim
                         </View>
 
                         <View style={styles.timeContainer}>
-                            <Text style={styles.name}>Восход  </Text>
+                            <Text style={styles.name}>Восход</Text>
                             <SwitchButton id='2' time={prayTime ? prayTime.Sunrise : ''}/>
                             <Text style={styles.time}>
                                 {prayTime ? prayTime.Sunrise.substring(0,2) + prayTime.Sunrise.substring(2,5) : null}
@@ -33,7 +33,7 @@ export default function PrayerTimeModal({ modalVisible, setModalVisible, prayTim
                         </View>
 
                         <View style={styles.timeContainer}>
-                            <Text style={styles.name}>Зухр       </Text>
+                            <Text style={styles.name}>Зухр     </Text>
                                 <SwitchButton id='3' time={prayTime ? prayTime.Dhuhr : ''}/>
                             <Text style={styles.time}>
                                 {prayTime ? prayTime.Dhuhr.substring(0,2) + prayTime.Dhuhr.substring(2,5) : null}

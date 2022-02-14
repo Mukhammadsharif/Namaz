@@ -92,7 +92,9 @@ export default function Navigation(){
                     headerTitle: () => null, header: null
                 }} >
                     <Stack.Screen name="AuthLoadingScreen" component={AuthLoadingScreen} options={{ headerShown: false }} />
-                    <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
+                    <Stack.Screen name="Register" options={{ headerShown: false }}>
+                         {props => (<Register {...props} religious={religious} setReligious={setReligious}/>)}
+                    </Stack.Screen>
                     <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
                     <Stack.Screen name="TabScreen" options={{ headerShown: false }} >
                         {props => (<TabScreen {...props} religios={religious}/>)}
