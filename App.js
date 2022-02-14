@@ -30,7 +30,7 @@ import FamilyIcon from './src/assets/icons/icons8-family-150.png'
 import FamilyIconActive from './src/assets/icons/icons8-family.gif'
 import {StatusBar} from "expo-status-bar";
 import {MusicContext, music, value, GlobalProvider} from "./src/utils/context";
-import firebase from 'firebase'
+import firebase from 'firebase/compat'
 import { LogBox } from 'react-native'
 import recorderPermission from './recorderPermission'
 
@@ -116,9 +116,9 @@ function TabScreen({ religios }) {
     const [calendarState, setCalendarState] = useState(false)
     const [treeState, setTreeState] = useState(false)
     const [user, setUser] = useState(null)
-
     firebase.auth().onAuthStateChanged((user) => {
         setUser(user)
+        console.log(user, 'user')
     })
 
     return(

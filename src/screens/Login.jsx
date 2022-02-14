@@ -13,6 +13,7 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
 import {theme} from "../components/theme";
+import { app } from "../../config";
 
 export default function Login({ navigation }){
     const [email, setEmail] = useState({value: '', error: ''})
@@ -52,7 +53,7 @@ export default function Login({ navigation }){
     useEffect(() => {
         if(data !== null) {
             if(data.additionalUserInfo.isNewUser) {
-                firebase.database().ref('users/').child(data.user.uid).set({
+                app.database().ref('users/').child(data.user.uid).set({
                     id: data.user.uid,
                     name: data.additionalUserInfo.profile.given_name,
                     email: data.additionalUserInfo.profile.email,

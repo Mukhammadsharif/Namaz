@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react"
 import { View, Switch } from "react-native"
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import firebase from "../../config";
+import {app} from "../../config";
 
 export default function TreeSwitch({}){
     const [isEnabled, setIsEnabled] = useState(null);
-    const uid = firebase.auth().currentUser.uid
+    const uid = app.auth().currentUser.uid
 
     const toggleSwitch = async () => {
         setIsEnabled(previousState => !previousState)
 
-         await firebase.database().ref('users/' + uid)
+         await app.database().ref('users/' + uid)
             .update({treeVisibility: isEnabled})
     }
 

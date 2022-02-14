@@ -9,10 +9,11 @@ import passwordValidator from "../helpers/passwordValidator";
 import phoneNumberValidator from "../helpers/phoneNumberValidator";
 import { signUpUser } from "../../api/auth-api";
 import TextInput from "../components/TextInput";
-import firebase from 'firebase/compat'
+// import firebase from 'firebase/compat'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 import {theme} from "../components/theme";
+import { app } from "../../config";
 
 
 export default function Register(){
@@ -46,13 +47,13 @@ export default function Register(){
             phoneNumber: phoneNumber.value
         })
 
-            let uid = firebase.auth().currentUser.uid
-            await firebase.database().ref('users/').child(uid).set({
+            let uid = app.auth().currentUser.uid
+            await app.database().ref('users/').child(uid).set({
                  id: uid,
                  name: name.value,
                  email: email.value,
                  phone: phoneNumber.value,
-                 family_id: firebase.auth().currentUser.uid,
+                 family_id: app.auth().currentUser.uid,
                  image: null,
                  status: false,
                  treeVisibility: false,

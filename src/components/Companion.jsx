@@ -2,10 +2,10 @@ import React, {useEffect, useState} from "react"
 import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native'
 import { normalize } from "../utils/normalize";
 import CompanionImage from '../assets/images/companion.png'
-import firebase from "../../config";
+import { app } from "../../config"
 
 export default function Companion({ navigation, item }) {
-    const currentUserId = firebase.auth().currentUser.uid
+    const currentUserId = app.auth().currentUser.uid
     const [messages, setMessages] = useState([])
     const [lastMessages, setLastMessages] = useState(null)
     const [newMessages_, setNewMessages_] = useState(null)
@@ -13,7 +13,7 @@ export default function Companion({ navigation, item }) {
     let newMessages = []
 
      useEffect(() => {
-            firebase.database().ref('messages')
+            app.database().ref('messages')
                 .child(currentUserId)
                 .child(item.val().id)
                 .on('value', snapshot => {

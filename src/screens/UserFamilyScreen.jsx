@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import {normalize} from "../utils/normalize";
 import firebase from "firebase/compat";
 import {Card, Paragraph} from "react-native-paper";
+import { app } from "../../config";
 
 export default function UserFamilyScreen({ route }) {
     const navigation = useNavigation()
@@ -16,12 +17,12 @@ export default function UserFamilyScreen({ route }) {
     const [treeVisibility, setTreeVisibility] = useState(null)
 
     const fetchData = () => {
-               firebase.database().ref('family/')
+               app.database().ref('family/')
                 .orderByChild('age')
                 .on('value', snapshot => {
                     setTree(snapshot)
                 })
-              firebase.database().ref('users/' + guestId).child('treeVisibility')
+              app.database().ref('users/' + guestId).child('treeVisibility')
                   .on('value', snapshot => console.log(snapshot))
 
     }
@@ -41,13 +42,8 @@ export default function UserFamilyScreen({ route }) {
             })
         }
         setFamily(members.reverse())
-
-        // return () => {
-        //     setCompanion([])
-        // }
     }, [tree])
 
-    console.log(guestId, family, 'aaa' + treeVisibility)
     return (
         <View>
             <View style={styles.chatHeaderContainer}>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import {normalize} from "../utils/normalize";
-import firebase from '../../config'
+import {app} from '../../config'
 import downloadAudio from "../sounds/downloadAudio";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {faPlay, faSpinner} from "@fortawesome/free-solid-svg-icons";
@@ -10,7 +10,7 @@ export default function Message({ item }) {
 
     return (
             <>
-            { item.val().currentUid !== firebase.auth().currentUser.uid ? (
+            { item.val().currentUid !== app.auth().currentUser.uid ? (
                 <TouchableOpacity
                     style={styles.messageContainer}
                     onPress={() => item.val().message === 'audio' ? downloadAudio(item.val().id) : null}>

@@ -4,8 +4,7 @@ import AddCompanionModal from "../components/AddCompanionModal";
 import PlusIcon from '../assets/icons/+.png'
 import {normalize} from "../utils/normalize"
 import Companion from "../components/Companion"
-import firebase from "firebase/compat";
-
+import {app} from '../../config'
 
 export default function Chat({ navigation }){
     const [modalVisible, setModalVisible] = useState(false)
@@ -23,7 +22,7 @@ export default function Chat({ navigation }){
     let chatList = []
 
     const getCompanion = () => {
-              firebase.database().ref('users/')
+              app.database().ref('users/')
                 .orderByChild('phone')
                 .equalTo(phone)
                 .on('value', snapshot => {
@@ -56,14 +55,12 @@ export default function Chat({ navigation }){
         setPhone('')
     }, [userLoading])
 
-    console.log(user, companions)
-
 
     const setCompanionList = () => {
-        const uid = firebase.auth().currentUser.uid
+        const uid = app.auth().currentUser.uid
              if (company) {
                     company.map(item => {
-                        firebase.database().ref('users/' + uid).child('companion').push({
+                        app.database().ref('users/' + uid).child('companion').push({
                         companion: item.key
                     })
                 })
@@ -71,8 +68,8 @@ export default function Chat({ navigation }){
     }
 
     const getCompanionListItems = () => {
-        const uid = firebase.auth().currentUser.uid
-                 firebase.database().ref('users/' + uid)
+        const uid = app.auth().currentUser.uid
+                 app.database().ref('users/' + uid)
                 .child('companion')
                 .on('value', snapshot => {
                     setCompanion(snapshot)
@@ -96,7 +93,7 @@ export default function Chat({ navigation }){
     let array = []
     const setChatList = () => {
             companionsList.map(item => {
-                firebase.database().ref('users/')
+                app.database().ref('users/')
                     .orderByChild('id')
                     .equalTo(item.val().companion)
                     .on('value', snapshot => {

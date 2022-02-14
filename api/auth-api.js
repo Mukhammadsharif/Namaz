@@ -1,4 +1,4 @@
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat'
 import 'firebase/auth'
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import auth from '@react-native-firebase/auth'
@@ -14,7 +14,7 @@ export async function googleSignIn() {
 
 export async function signUpUser({ name, email, password }) {
     try {
-        const { user } = await auth()
+        const { user } = await firebase.auth()
             .createUserWithEmailAndPassword(email, password)
         await firebase.auth().currentUser.updateProfile({displayName: name})
         return { user }
@@ -26,7 +26,7 @@ export async function signUpUser({ name, email, password }) {
 
 export async function loginUser({ email, password }) {
     try {
-        const { user } = await auth()
+        const { user } = await firebase.auth()
             .signInWithEmailAndPassword(email, password)
         return { user }
     } catch (error) {
@@ -39,7 +39,7 @@ export async function loginUser({ email, password }) {
 
 export async function resetPassword({ email }) {
     try {
-        await auth().sendPasswordResetEmail(email)
+        await firebase.auth().sendPasswordResetEmail(email)
         return {}
     } catch (error) {
         return {
@@ -49,5 +49,5 @@ export async function resetPassword({ email }) {
 }
 
 export function logOut(){
-    auth().signOut().then(r => {})
+    firebase.auth().signOut().then(r => {})
 }

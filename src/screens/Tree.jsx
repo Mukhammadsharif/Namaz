@@ -9,6 +9,7 @@ import ChatIcon from '../assets/icons/chat-Icon.png'
 import { useNavigation } from "@react-navigation/native";
 import firebase from 'firebase/compat'
 import AddFamilyMemberModal from "../components/AddFamilyMemberModal";
+import { app } from "../../config";
 
 export default function Tree() {
     const navigation = useNavigation()
@@ -32,10 +33,10 @@ export default function Tree() {
 
     let members = []
     let editedArray = []
-    const id = firebase.auth().currentUser.uid
+    const id = app.auth().currentUser.uid
 
     const fetchData = () => {
-               firebase.database().ref('family/')
+               app.database().ref('family/')
                 .orderByChild('age')
                 .on('value', snapshot => {
                     setTree(snapshot)
@@ -44,11 +45,11 @@ export default function Tree() {
 
 
     const deleteItem = (id) => {
-        firebase.database().ref('family/'+ id).remove()
+        app.database().ref('family/'+ id).remove()
     }
 
     const editItem = (id) => {
-        firebase.database().ref('family/')
+        app.database().ref('family/')
                 .orderByKey()
                 .equalTo(id)
                 .on('value', snapshot => {
@@ -58,7 +59,7 @@ export default function Tree() {
     }
 
      const updateMember = async () => {
-        await firebase.database().ref('family/').child(editedKey).update({
+        await app.database().ref('family/').child(editedKey).update({
                  name: editedName,
                  surname: editedSurname,
                  description: editedDescription,
@@ -119,7 +120,7 @@ export default function Tree() {
 
 
     const getCompanion = async (phone) => {
-        firebase.database().ref('users/')
+        app.database().ref('users/')
             .orderByChild('phone')
             .equalTo(phone)
             .on('value', snapshot => {
@@ -133,8 +134,8 @@ export default function Tree() {
     }
 
     const setCompanionList = (key) => {
-        const uid = firebase.auth().currentUser.uid
-        firebase.database().ref('users/' + uid)
+        const uid = app.auth().currentUser.uid
+        app.database().ref('users/' + uid)
                 .child('companion')
                 .on('value', snapshot => {
                    snapshot.forEach(item => {
@@ -144,7 +145,7 @@ export default function Tree() {
                    })
                 })
              if (companion && companion.includes(key) === false) {
-                 firebase.database().ref('users/' + uid).child('companion').push({
+                 app.database().ref('users/' + uid).child('companion').push({
                      companion: key
                  })
              }

@@ -18,7 +18,8 @@ import {
 import uploadAudio from "../sounds/uploadAudio";
 import { v4 as uuid } from 'uuid'
 import {faPlay, faShare} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome"
+import { app } from '../../config'
 
 
 const audioRecorderPlayer = new AudioRecorderPlayer();
@@ -26,7 +27,7 @@ const audioRecorderPlayer = new AudioRecorderPlayer();
 export default function ChatDetail({ navigation, route }) {
     const [message, setMessage] = useState('')
     const { name, guestId, status, visibility } = route.params
-    const currentUserId = firebase.auth().currentUser.uid
+    const currentUserId = app.auth().currentUser.uid
     const [messages, setMessages] = useState([])
     const [newMessage, setNewMessage] = useState(false)
     const [audio, setAudio] = useState('audio')
@@ -69,7 +70,7 @@ export default function ChatDetail({ navigation, route }) {
 
     useEffect(() => {
         try {
-            firebase.database().ref('messages')
+            app.database().ref('messages')
                 .child(currentUserId)
                 .child(guestId)
                 .on('value', snapshot => {

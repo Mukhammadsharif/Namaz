@@ -18,9 +18,8 @@ import imagePicker1 from '../assets/icons/imagePicker1.png'
 import imagePicker2 from '../assets/icons/imagePicker2.png'
 import DeathDate from "./DeathDate";
 import BirthDate from "./BirthDate";
-// import firebase from "../../config";
+import { app } from "../../config";
 import storage from '@react-native-firebase/storage'
-import {firebase} from '@react-native-firebase/auth'
 import  { v4 as uuid } from 'uuid'
 
 export default function AddFamilyMemberModal({
@@ -69,7 +68,7 @@ export default function AddFamilyMemberModal({
     }
 
     useEffect(() => {
-        firebase.auth().signInAnonymously()
+        // app.auth().signInAnonymously()
         uri ? uploadImage() : null
         editedUri ? editedUploadImage(): null
     }, [uri, editedUri])
@@ -81,7 +80,7 @@ export default function AddFamilyMemberModal({
     const uploadImage = async () => {
           const filename = uri.substring(uri.lastIndexOf('/') + 1);
           const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
-          const task = firebase.storage()
+          const task = app.storage()
             .ref(filename)
             .put(uploadUri);
           // set progress state
@@ -103,7 +102,7 @@ export default function AddFamilyMemberModal({
           const filename = editedUri.substring(editedUri.lastIndexOf('/') + 1);
           const uploadUri = Platform.OS === 'ios' ? editedUri.replace('file://', '') : editedUri;
           console.log(uploadUri)
-          const task = storage()
+          const task = app.storage()
             .ref(filename)
             .putFile(uploadUri);
           // set progress state
@@ -122,13 +121,13 @@ export default function AddFamilyMemberModal({
 
 
     const addMember = async () => {
-        await firebase.database().ref('family/').child(uuid()).set({
+        await app.database().ref('family/').child(uuid()).set({
                  id: uuid(),
                  name: name,
                  surname: surname,
                  description: description,
                  image: uri,
-                 family_id: firebase.auth().currentUser.uid,
+                 family_id: app.auth().currentUser.uid,
                  age: age,
                  born: date,
                  died: date_,

@@ -53,8 +53,8 @@ export const LocalScheduleNotification = (timeId, message, hour, minute, music) 
       message: message, // (required)
       playSound: true,
       soundName: `android.resource://com.namaz/raw/${music}`,
-      // date: new Date(now), // in 60 secs
-      date: new Date(Date.now() + 5 * 1000),
+      date: new Date(now), // in 60 secs
+      // date: now,
       allowWhileIdle: false, // (optional) set notification to work while on doze, default: false
       repeatTime: 1,
       repeatType: "day",// (optional) Increment of configured repeatType. Check 'Repeating Notifications' section for more info.

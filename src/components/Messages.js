@@ -1,8 +1,8 @@
-import firebase from '../../config'
+import {app} from '../../config'
 
 export const SendMessage = async (currentUid, guestUid, message, id) => {
     try {
-        return await firebase
+        return await app
             .database()
             .ref('messages')
             .child(currentUid)
@@ -21,7 +21,7 @@ export const SendMessage = async (currentUid, guestUid, message, id) => {
 
 export const ReceiveMessage = async (currentUid, guestUid, message) => {
     try {
-        return await firebase
+        return await app
             .database()
             .ref('messages')
             .child(guestUid)
