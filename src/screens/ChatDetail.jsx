@@ -33,6 +33,7 @@ export default function ChatDetail({ navigation, route }) {
     const [audio, setAudio] = useState('audio')
     const [pauseRecord, setPauseRecord] = useState(false)
     const [audioState, setAudioState] = useState('Нажмите на микрофон')
+    const [loading, setLoading] = useState(false)
     let allMessages = []
 
     const scrollViewRef = useRef()
@@ -83,7 +84,7 @@ export default function ChatDetail({ navigation, route }) {
             console.log(error)
         }
 
-    }, [message, newMessage])
+    }, [message, newMessage, loading])
 
     const [state, setState] = useState({})
 
@@ -166,7 +167,7 @@ export default function ChatDetail({ navigation, route }) {
                 onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
             >
                 {messages ? messages.map(item => (
-                    <Message item={item} key={item.val().id}/>
+                    <Message item={item} key={item.val().id} loading={loading} setLoading={setLoading}/>
                 )): null}
 
             </ScrollView>

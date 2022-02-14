@@ -4,7 +4,7 @@ import AddCompanionModal from "../components/AddCompanionModal";
 import PlusIcon from '../assets/icons/+.png'
 import {normalize} from "../utils/normalize"
 import Companion from "../components/Companion"
-import {app} from '../../config'
+import { app } from '../../config'
 
 export default function Chat({ navigation }){
     const [modalVisible, setModalVisible] = useState(false)
@@ -43,19 +43,18 @@ export default function Chat({ navigation }){
                 })
     }
 
-
     useEffect(() => {
-        if (user) {
+        if (user){
            user.forEach(item => {
                companions.push(item)
                setCompany(companions)
            })
-            setCompanionList()
+            // setCompanionList()
         }
         setPhone('')
-    }, [userLoading])
+    }, [user])
 
-
+    console.log(company, 'company')
     const setCompanionList = () => {
         const uid = app.auth().currentUser.uid
              if (company) {
@@ -83,12 +82,12 @@ export default function Chat({ navigation }){
                 })
                 setCompanionsList(list)
             }
-    }, [companion])
+    }, [companion, userLoading])
 
 
     useEffect(() => {
         setChatList()
-    }, [companionsList])
+    }, [companionsList, userLoading])
 
     let array = []
     const setChatList = () => {
@@ -125,17 +124,20 @@ export default function Chat({ navigation }){
 
     useEffect(() => {
         setList()
-    }, [chats])
+    }, [chats, loading, userLoading])
 
 
 
     useEffect(() => {
         getCompanionListItems()
-    }, [])
+    }, [loading, userLoading])
 
     useEffect(() => {
        getCompanion()
-    }, [loading])
+       if(company !== []) {
+           setCompanionList()
+       }
+    }, [loading, userLoading, company])
 
 
     return(

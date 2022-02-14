@@ -1,41 +1,77 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import {normalize} from "../utils/normalize";
 import {app} from '../../config'
 import downloadAudio from "../sounds/downloadAudio";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
-import {faPlay, faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {faPlay, faSpinner, faTrash} from "@fortawesome/free-solid-svg-icons";
 
-export default function Message({ item }) {
+export default function Message({ item, loading, setLoading }) {
+    const [deleteItem, setDeleteItem] = useState(false)
+    const deleteMessage = async (message) => {
+       await app
+            .database()
+            .ref('messages')
+            .child(message.val().currentUid)
+            .child(message.val().guestUid)
+            .child(message.key)
+            .remove()
+        setLoading(!loading)
+    }
 
     return (
             <>
             { item.val().currentUid !== app.auth().currentUser.uid ? (
-                <TouchableOpacity
-                    style={styles.messageContainer}
-                    onPress={() => item.val().message === 'audio' ? downloadAudio(item.val().id) : null}>
-                    <View style={styles.message}>
-                        {item.val().message !== 'audio' ? (
-                            <Text style={styles.messageText}>{item.val().message}</Text>
-                        ) : (
-                            <FontAwesomeIcon icon={faPlay}/>
-                        )}
-                        <Text style={styles.messageTime}>{item.val().created_at ? item.val().created_at : "10:35"}</Text>
-                    </View>
-                </TouchableOpacity>
-                ) : (
+                <View>
                     <TouchableOpacity
-                        style={styles.ownMessageContainer}
+                        style={styles.messageContainer}
                         onPress={() => item.val().message === 'audio' ? downloadAudio(item.val().id) : null}>
                         <View style={styles.message}>
                             {item.val().message !== 'audio' ? (
-                                <Text style={styles.messageText}>{item.val().message}</Text>
-                            ) : (
-                                <FontAwesomeIcon icon={faPlay}/>
-                            )}
+                                    <Text style={styles.messageText}>{item.val().message}</Text>
+                                ) : (
+                                     deleteItem ? (
+                                        <TouchableOpacity>
+                                            <FontAwesomeIcon icon={faTrash} />
+                                        </TouchableOpacity>
+                                                ) : (
+                                        <FontAwesomeIcon icon={faPlay}/>
+                                        )
+                                )}
                             <Text style={styles.messageTime}>{item.val().created_at ? item.val().created_at : "10:35"}</Text>
                         </View>
                     </TouchableOpacity>
+                </View>
+                ) : (
+                         <TouchableOpacity
+                            style={styles.ownMessageContainer}
+                            onPress={() => item.val().message === 'audio' ? downloadAudio(item.val().id) : null}
+                            onLongPress={() => setDeleteItem(true)}>
+                            <View style={styles.message}>
+                                {item.val().message !== 'audio' ? (
+                                    deleteItem ? (
+                                        <TouchableOpacity
+                                            onLongPress={() => setDeleteItem(false)}
+                                            onPress={() => deleteMessage(item)}>
+                                            <FontAwesomeIcon icon={faTrash} />
+                                        </TouchableOpacity>
+                                                ) : (
+                                        <Text style={styles.messageText}>{item.val().message}</Text>
+                                        )
+                                ) : (
+                                     deleteItem ? (
+                                        <TouchableOpacity
+                                            onLongPress={() => setDeleteItem(false)}
+                                            onPress={() => deleteMessage(item)}>
+                                            <FontAwesomeIcon icon={faTrash} />
+                                        </TouchableOpacity>
+                                                ) : (
+                                        <FontAwesomeIcon icon={faPlay}/>
+                                        )
+                                )}
+                                <Text style={styles.messageTime}>{item.val().created_at ? item.val().created_at : "10:35"}</Text>
+                            </View>
+                        </TouchableOpacity>
                 )}
             </>
 
